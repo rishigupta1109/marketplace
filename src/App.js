@@ -117,11 +117,11 @@ const App = props => {
               }
             >
               <Switch>
-                <Route
+                {/* <Route
                   exact
                   path={process.env.PUBLIC_URL + "/"}
                   component={HomeFashion}
-                />
+                /> */}
 
                 {/* Homepages */}
                 <Route
@@ -226,10 +226,14 @@ const App = props => {
                 />
 
                 {/* Shop pages */}
-                <Route
-                  path={process.env.PUBLIC_URL + "/shop-grid-standard"}
+                <Route exact
+                  path={process.env.PUBLIC_URL + "/"}
                   component={ShopGridStandard}
                 />
+                {/* <Route
+                  path={process.env.PUBLIC_URL + "/shop-grid-standard"}
+                  component={ShopGridStandard}
+                /> */}
                 <Route
                   path={process.env.PUBLIC_URL + "/shop-grid-filter"}
                   component={ShopGridFilter}
