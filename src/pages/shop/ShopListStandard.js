@@ -21,7 +21,7 @@ const ShopListStandard = ({ location, products }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [currentData, setCurrentData] = useState([]);
   const [sortedProducts, setSortedProducts] = useState([]);
-
+ 
   const pageLimit = 15;
   const { pathname } = location;
 
@@ -38,19 +38,21 @@ const ShopListStandard = ({ location, products }) => {
     setFilterSortType(sortType);
     setFilterSortValue(sortValue);
   };
-
+  
   useEffect(() => {
+   
     let sortedProducts = getSortedProducts(products, sortType, sortValue);
     const filterSortedProducts = getSortedProducts(
       sortedProducts,
       filterSortType,
       filterSortValue
     );
+    
     sortedProducts = filterSortedProducts;
     setSortedProducts(sortedProducts);
     setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
   }, [offset, products, sortType, sortValue, filterSortType, filterSortValue]);
-
+ 
   return (
     <Fragment>
       <MetaTags>
@@ -77,6 +79,7 @@ const ShopListStandard = ({ location, products }) => {
                 {/* shop sidebar */}
                 <ShopSidebar
                   products={products}
+                 
                   getSortParams={getSortParams}
                   sideSpaceClass="mr-30"
                 />
@@ -117,6 +120,7 @@ const ShopListStandard = ({ location, products }) => {
 };
 
 ShopListStandard.propTypes = {
+  
   location: PropTypes.object,
   products: PropTypes.array
 };

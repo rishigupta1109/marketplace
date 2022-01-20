@@ -12,7 +12,7 @@ import ShopColor from "../../components/product/ShopColor";
 import ShopSize from "../../components/product/ShopSize";
 import ShopTag from "../../components/product/ShopTag";
 
-const ShopSidebar = ({ products, getSortParams, sideSpaceClass }) => {
+const ShopSidebar = ({ products,setSearchKeyword, getSortParams, sideSpaceClass }) => {
   const uniqueCategories = getUniqueCategories(products);
   const uniqueColors = getUniqueColors(products);
   const uniqueSizes = getProductsUniqueSizes(products);
@@ -21,7 +21,9 @@ const ShopSidebar = ({ products, getSortParams, sideSpaceClass }) => {
   return (
     <div className={`sidebar-style ${sideSpaceClass ? sideSpaceClass : ""}`}>
       {/* shop search */}
-      <ShopSearch />
+      <ShopSearch
+        setSearchKeyword={setSearchKeyword}
+      />
 
       {/* filter by categories */}
       <ShopCategories
@@ -43,6 +45,7 @@ const ShopSidebar = ({ products, getSortParams, sideSpaceClass }) => {
 
 ShopSidebar.propTypes = {
   getSortParams: PropTypes.func,
+  setSearchKeyword:PropTypes.func,
   products: PropTypes.array,
   sideSpaceClass: PropTypes.string
 };

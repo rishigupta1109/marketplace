@@ -21,7 +21,7 @@ const ShopGridStandard = ({location, products}) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [currentData, setCurrentData] = useState([]);
     const [sortedProducts, setSortedProducts] = useState([]);
-
+    const [searchKeyword, setSearchKeyword] = useState("");
     const pageLimit = 15;
     const {pathname} = location;
 
@@ -38,14 +38,19 @@ const ShopGridStandard = ({location, products}) => {
         setFilterSortType(sortType);
         setFilterSortValue(sortValue);
     }
-
+    const searchResults = (products, key) => {
+        let regex = new RegExp(key,"i");
+        let Searchedarray = products.filter(product => regex.test(product.productName));
+        return Searchedarray;
+      }
     useEffect(() => {
         let sortedProducts = getSortedProducts(products, sortType, sortValue);
         const filterSortedProducts = getSortedProducts(sortedProducts, filterSortType, filterSortValue);
-        sortedProducts = filterSortedProducts;
+        let searchedProducts = searchResults(filterSortedProducts, searchKeyword);
+        sortedProducts = searchedProducts;
         setSortedProducts(sortedProducts);
         setCurrentData(sortedProducts.slice(offset, offset + pageLimit));
-    }, [offset, products, sortType, sortValue, filterSortType, filterSortValue ]);
+    }, [offset, products, sortType, sortValue, filterSortType, filterSortValue,searchKeyword]);
 
     return (
         <Fragment>
@@ -66,7 +71,8 @@ const ShopGridStandard = ({location, products}) => {
                         <div className="row">
                             <div className="col-lg-3 order-2 order-lg-1">
                                 {/* shop sidebar */}
-                                <ShopSidebar products={products} getSortParams={getSortParams} sideSpaceClass="mr-30"/>
+                                <ShopSidebar
+                                 setSearchKeyword={setSearchKeyword}    products={products} getSortParams={getSortParams} sideSpaceClass="mr-30" />
                             </div>
                             <div className="col-lg-9 order-1 order-lg-2">
                                 {/* shop topbar default */}
