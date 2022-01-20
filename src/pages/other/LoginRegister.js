@@ -1,16 +1,53 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import MetaTags from "react-meta-tags";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import axios from 'axios';
 
-const LoginRegister = ({ location }) => {
+const LoginRegister = ({ location, setLoginUser }) => {
+  const history = useHistory()
   const { pathname } = location;
-
+  const [user, setUser] = useState({
+    name: "",
+    password: "",
+    reEnterPassword:"",
+    email:"",
+  })
+  const handleChange = e => {
+    const {name, value} = e.target
+    setUser({
+        ...user,
+        [name]:value
+    })
+  }
+  const login = () => {
+    axios.post("http://localhost:9000/login", user)
+    .then(res =>{
+        alert(res.data.message)
+        setLoginUser(res.data.user)
+        // history.push("../cart")
+    })
+  }
+  const register = ()=>{
+    let emailPattern = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
+    let emailPattern2 = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
+    const { name, email, password, reEnterPassword } = user
+    if(name && email && password && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email))){
+        // alert("posted")
+        axios.post("http://localhost:9000/signup", user)
+        .then( res => {
+            alert(res.data.message)
+            // history.push("/cart")
+        })
+    }else{
+        alert("invalid input")
+    }
+  }
   return (
     <Fragment>
       <MetaTags>
@@ -50,25 +87,17 @@ const LoginRegister = ({ location }) => {
                         <div className="login-form-container">
                           <div className="login-register-form">
                             <form>
-                              <input
-                                type="text"
-                                name="user-name"
-                                placeholder="Username"
-                              />
-                              <input
-                                type="password"
-                                name="user-password"
-                                placeholder="Password"
-                              />
+                            <input type="text" name="email" value={user.email} onChange={handleChange} placeholder="Email"></input>
+                            <input type="password" name="password" value={user.password} onChange={handleChange} placeholder="Password"></input>
                               <div className="button-box">
                                 <div className="login-toggle-btn">
-                                  <input type="checkbox" />
-                                  <label className="ml-10">Remember me</label>
-                                  <Link to={process.env.PUBLIC_URL + "/"}>
+                                  {/* <input type="checkbox" />
+                                  <label className="ml-10">Remember me</label> */}
+                                  <Link to={process.env.PUBLIC_URL + "/home"}>
                                     Forgot Password?
                                   </Link>
                                 </div>
-                                <button type="submit">
+                                <button type="submit" onClick={login}>
                                   <span>Login</span>
                                 </button>
                               </div>
@@ -80,23 +109,12 @@ const LoginRegister = ({ location }) => {
                         <div className="login-form-container">
                           <div className="login-register-form">
                             <form>
-                              <input
-                                type="text"
-                                name="user-name"
-                                placeholder="Username"
-                              />
-                              <input
-                                type="password"
-                                name="user-password"
-                                placeholder="Password"
-                              />
-                              <input
-                                name="user-email"
-                                placeholder="Email"
-                                type="email"
-                              />
+                            <input type="text" name="name" value={user.name} placeholder="Name" onChange={handleChange}></input>
+                            <input type="text" name="email" value={user.email} placeholder="Email" onChange={handleChange}></input>
+                            <input type="password" name="password" value={user.password} placeholder="Password" onChange={handleChange}></input>
+                            <input type="password" name="reEnterPassword" value={user.reEnterPassword} placeholder="Re-Enter Password" onChange={handleChange}></input>
                               <div className="button-box">
-                                <button type="submit">
+                                <button type="submit" onClick={register}>
                                   <span>Register</span>
                                 </button>
                               </div>

@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useEffect, Suspense, lazy } from "react";
+import React, { useEffect, Suspense, lazy, useState } from "react";
 import ScrollToTop from "./helpers/scroll-top";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastProvider } from "react-toast-notifications";
@@ -100,7 +100,7 @@ const App = props => {
       })
     );
   });
-
+  const [user, setLoginUser] = useState({});
   return (
     <ToastProvider placement="bottom-left">
       <BreadcrumbsProvider>
@@ -328,7 +328,8 @@ const App = props => {
                 />
                 <Route
                   path={process.env.PUBLIC_URL + "/login-register"}
-                  component={LoginRegister}
+                  setLoginUser = {setLoginUser}
+                  render={props => (<LoginRegister {...props}/>)}
                 />
 
                 <Route
