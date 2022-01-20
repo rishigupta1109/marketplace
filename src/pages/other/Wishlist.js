@@ -14,7 +14,7 @@ import {
 import { addToCart } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-const imageURL = "http://192.168.29.202:5500/static/";
+const imageURL = "http://localhost:9000/static/";
 const Wishlist = ({
   location,
   cartItems,
@@ -81,13 +81,13 @@ const Wishlist = ({
                             return (
                               <tr key={key}>
                                 <td className="product-thumbnail">
-                                  <Link
+                                  {/* <Link
                                     to={
                                       process.env.PUBLIC_URL +
                                       "/product/" +
                                       wishlistItem.productID
                                     }
-                                  >
+                                  > */}
                                     <img
                                       className="img-fluid"
                                       src={
@@ -96,19 +96,19 @@ const Wishlist = ({
                                       }
                                       alt=""
                                     />
-                                  </Link>
+                                  {/* </Link> */}
                                 </td>
 
                                 <td className="product-name text-center">
-                                  <Link
+                                  {/* <Link
                                     to={
                                       process.env.PUBLIC_URL +
                                       "/product/" +
                                       wishlistItem.productID
                                     }
-                                  >
+                                  > */}
                                     {wishlistItem.productName}
-                                  </Link>
+                                  {/* </Link> */}
                                 </td>
 
                                 <td className="product-price-cart">
@@ -205,7 +205,7 @@ const Wishlist = ({
                     <div className="cart-shiping-update-wrapper">
                       <div className="cart-shiping-update">
                         <Link
-                          to={process.env.PUBLIC_URL + "/shop-grid-standard"}
+                          to={process.env.PUBLIC_URL + "/"}
                         >
                           Continue Shopping
                         </Link>
@@ -228,7 +228,7 @@ const Wishlist = ({
                     </div>
                     <div className="item-empty-area__text">
                       No items found in wishlist <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                      <Link to={process.env.PUBLIC_URL + "/"}>
                         Add Items
                       </Link>
                     </div>

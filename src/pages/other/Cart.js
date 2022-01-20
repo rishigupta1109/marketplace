@@ -16,7 +16,7 @@ import {
 } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-const imageURL = "http://192.168.29.202:5500/static/";
+const imageURL = "http://localhost:9000/static/";
 const Cart = ({
   location,
   cartItems,
@@ -90,13 +90,13 @@ const Cart = ({
                             return (
                               <tr key={key}>
                                 <td className="product-thumbnail">
-                                  <Link
+                                  {/* <Link
                                     to={
                                       process.env.PUBLIC_URL +
                                       "/product/" +
                                       cartItem.id
                                     }
-                                  >
+                                  > */}
                                     <img
                                       className="img-fluid"
                                       src={
@@ -105,19 +105,19 @@ const Cart = ({
                                       }
                                       alt=""
                                     />
-                                  </Link>
+                                  {/* </Link> */}
                                 </td>
 
                                 <td className="product-name">
-                                  <Link
+                                  {/* <Link
                                     to={
                                       process.env.PUBLIC_URL +
                                       "/product/" +
                                       cartItem.productID
                                     }
-                                  >
+                                  > */}
                                     {cartItem.productName}
-                                  </Link>
+                                  {/* </Link> */}
                                   {cartItem.selectedProductColor &&
                                   cartItem.selectedProductSize ? (
                                     <div className="cart-item-variation">
@@ -225,7 +225,7 @@ const Cart = ({
                     <div className="cart-shiping-update-wrapper">
                       <div className="cart-shiping-update">
                         <Link
-                          to={process.env.PUBLIC_URL + "/shop-grid-standard"}
+                          to={process.env.PUBLIC_URL + "/"}
                         >
                           Continue Shopping
                         </Link>
@@ -339,7 +339,7 @@ const Cart = ({
                     </div>
                     <div className="item-empty-area__text">
                       No items found in cart <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                      <Link to={process.env.PUBLIC_URL + "/"}>
                         Shop Now
                       </Link>
                     </div>

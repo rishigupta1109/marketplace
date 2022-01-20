@@ -25,15 +25,21 @@ const LoginRegister = ({ location, setLoginUser }) => {
         [name]:value
     })
   }
-  const login = () => {
-    axios.post("http://localhost:9000/login", user)
+  const login = (e) => {
+    e.preventDefault();
+    axios.post("http://localhost:9000/login", user, {
+      withCredentials: true,
+     
+    })
     .then(res =>{
         alert(res.data.message)
-        setLoginUser(res.data.user)
+      // setLoginUser(res.data.user)
+      console.log(res.data);
         // history.push("../cart")
     })
   }
-  const register = ()=>{
+  const register = (e)=>{
+    e.preventDefault();
     let emailPattern = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
     let emailPattern2 = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
     const { name, email, password, reEnterPassword } = user
@@ -86,7 +92,7 @@ const LoginRegister = ({ location, setLoginUser }) => {
                       <Tab.Pane eventKey="login">
                         <div className="login-form-container">
                           <div className="login-register-form">
-                            <form>
+                            <form onSubmit={login}>
                             <input type="text" name="email" value={user.email} onChange={handleChange} placeholder="Email"></input>
                             <input type="password" name="password" value={user.password} onChange={handleChange} placeholder="Password"></input>
                               <div className="button-box">
@@ -97,7 +103,7 @@ const LoginRegister = ({ location, setLoginUser }) => {
                                     Forgot Password?
                                   </Link>
                                 </div>
-                                <button type="submit" onClick={login}>
+                                <button type="submit" >
                                   <span>Login</span>
                                 </button>
                               </div>
@@ -108,13 +114,13 @@ const LoginRegister = ({ location, setLoginUser }) => {
                       <Tab.Pane eventKey="register">
                         <div className="login-form-container">
                           <div className="login-register-form">
-                            <form>
+                            <form onSubmit={register}>
                             <input type="text" name="name" value={user.name} placeholder="Name" onChange={handleChange}></input>
                             <input type="text" name="email" value={user.email} placeholder="Email" onChange={handleChange}></input>
                             <input type="password" name="password" value={user.password} placeholder="Password" onChange={handleChange}></input>
                             <input type="password" name="reEnterPassword" value={user.reEnterPassword} placeholder="Re-Enter Password" onChange={handleChange}></input>
                               <div className="button-box">
-                                <button type="submit" onClick={register}>
+                                <button type="submit" >
                                   <span>Register</span>
                                 </button>
                               </div>

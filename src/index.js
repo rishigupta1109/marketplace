@@ -22,7 +22,7 @@ const store = createStore(
 );
 
 // fetch products from json file
-fetch('http://192.168.29.202:5500/getProducts').then(res => res.json()).then(
+fetch('http://localhost:9000/getProducts').then(res => res.json()).then(
   data => { store.dispatch(fetchProducts(data)); console.log(data); }
 ).catch(err => console.log(err));
 

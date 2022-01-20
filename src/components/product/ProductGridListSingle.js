@@ -6,7 +6,7 @@ import { getDiscountPrice } from "../../helpers/product";
 import Rating from "./sub-components/ProductRating";
 import ProductModal from "./ProductModal";
 import "../../assets/css/extras.css";
-
+const serverURL = "http://localhost:9000/static/";
 const ProductGridListSingle = ({
   product,
   currency,
@@ -42,13 +42,13 @@ const ProductGridListSingle = ({
             {/* <Link to={process.env.PUBLIC_URL + "/product/" + product.productID}> */}
               <img
                 className="default-img"
-                src={"http://192.168.29.202:5500/static/" + product.image}
+                src={serverURL + product.image}
                 alt=""
               />
               {product.image.length > 1 ? (
                 <img
                   className="hover-img"
-                  src={"http://192.168.29.202:5500/static/" + product.image}
+                  src={serverURL + product.image}
                   alt=""
                 />
               ) : (
@@ -164,7 +164,7 @@ const ProductGridListSingle = ({
                   {/* <Link to={process.env.PUBLIC_URL + "/product/" + product.id}> */}
                     <img
                       className="default-img img-fluid"
-                      src={"http://192.168.29.202:5500/static/" + product.image}
+                      src={serverURL + product.image}
                       alt=""
                     />
                     {/* {product.image.length > 1 ? (
