@@ -15,6 +15,9 @@ export const addToCart = (
     if (addToast) {
       addToast("Added To Cart", { appearance: "success", autoDismiss: true });
     }
+    console.log(item, quantityCount,
+      selectedProductColor,
+      selectedProductSize);
     dispatch({
       type: ADD_TO_CART,
       payload: {
@@ -69,12 +72,13 @@ export const removeAllFromCart = addToast => {
 };
 
 // get stock of cart item
-export const cartItemStock = (item, color, size) => {
+export const cartItemStock = (item) => {
   if (item.stock) {
     return item.stock;
-  } else {
-    return item.variation
-      .filter(single => single.color === color)[0]
-      .size.filter(single => single.name === size)[0].stock;
   }
+  //  else {
+  //   return item.variation
+  //     .filter(single => single.color === color)[0]
+  //     .size.filter(single => single.name === size)[0].stock;
+  // }
 };

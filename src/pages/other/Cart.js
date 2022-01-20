@@ -1,3 +1,4 @@
+
 import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
@@ -15,7 +16,7 @@ import {
 } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-
+const imageURL = "http://192.168.29.202:5500/static/";
 const Cart = ({
   location,
   cartItems,
@@ -69,6 +70,7 @@ const Cart = ({
                         </thead>
                         <tbody>
                           {cartItems.map((cartItem, key) => {
+                            console.log(cartItem);
                             const discountedPrice = getDiscountPrice(
                               cartItem.price,
                               cartItem.discount
@@ -98,8 +100,8 @@ const Cart = ({
                                     <img
                                       className="img-fluid"
                                       src={
-                                        process.env.PUBLIC_URL +
-                                        cartItem.image[0]
+                                        imageURL +
+                                        cartItem.image
                                       }
                                       alt=""
                                     />
@@ -111,10 +113,10 @@ const Cart = ({
                                     to={
                                       process.env.PUBLIC_URL +
                                       "/product/" +
-                                      cartItem.id
+                                      cartItem.productID
                                     }
                                   >
-                                    {cartItem.name}
+                                    {cartItem.productName}
                                   </Link>
                                   {cartItem.selectedProductColor &&
                                   cartItem.selectedProductSize ? (
@@ -181,9 +183,7 @@ const Cart = ({
                                         cartItem.quantity &&
                                         cartItem.quantity >=
                                           cartItemStock(
-                                            cartItem,
-                                            cartItem.selectedProductColor,
-                                            cartItem.selectedProductSize
+                                            cartItem
                                           )
                                       }
                                     >

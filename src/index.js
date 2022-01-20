@@ -22,7 +22,9 @@ const store = createStore(
 );
 
 // fetch products from json file
-store.dispatch(fetchProducts(products));
+fetch('http://192.168.29.202:5500/getProducts').then(res => res.json()).then(
+  data => { store.dispatch(fetchProducts(data)); console.log(data); }
+).catch(err => console.log(err));
 
 ReactDOM.render(
   <Provider store={store}>

@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { getDiscountPrice } from "../../../helpers/product";
-
+const imageURL = "http://192.168.29.202:5500/static/";
 const MenuCart = ({ cartData, currency, removeFromCart }) => {
   let cartTotalPrice = 0;
   const { addToast } = useToasts();
@@ -34,7 +34,7 @@ const MenuCart = ({ cartData, currency, removeFromCart }) => {
                     <Link to={process.env.PUBLIC_URL + "/product/" + single.id}>
                       <img
                         alt=""
-                        src={process.env.PUBLIC_URL + single.image[0]}
+                        src={imageURL + single.image}
                         className="img-fluid"
                       />
                     </Link>
@@ -42,10 +42,10 @@ const MenuCart = ({ cartData, currency, removeFromCart }) => {
                   <div className="shopping-cart-title">
                     <h4>
                       <Link
-                        to={process.env.PUBLIC_URL + "/product/" + single.id}
+                        to={process.env.PUBLIC_URL + "/product/" + single.productID}
                       >
                         {" "}
-                        {single.name}{" "}
+                        {single.productName}{" "}
                       </Link>
                     </h4>
                     <h6>Qty: {single.quantity}</h6>

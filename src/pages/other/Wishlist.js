@@ -14,7 +14,7 @@ import {
 import { addToCart } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-
+const imageURL = "http://192.168.29.202:5500/static/";
 const Wishlist = ({
   location,
   cartItems,
@@ -76,7 +76,7 @@ const Wishlist = ({
                               discountedPrice * currency.currencyRate
                             ).toFixed(2);
                             const cartItem = cartItems.filter(
-                              item => item.id === wishlistItem.id
+                              item => item.productID === wishlistItem.productID
                             )[0];
                             return (
                               <tr key={key}>
@@ -85,14 +85,14 @@ const Wishlist = ({
                                     to={
                                       process.env.PUBLIC_URL +
                                       "/product/" +
-                                      wishlistItem.id
+                                      wishlistItem.productID
                                     }
                                   >
                                     <img
                                       className="img-fluid"
                                       src={
-                                        process.env.PUBLIC_URL +
-                                        wishlistItem.image[0]
+                                        imageURL +
+                                        wishlistItem.image
                                       }
                                       alt=""
                                     />
@@ -104,10 +104,10 @@ const Wishlist = ({
                                     to={
                                       process.env.PUBLIC_URL +
                                       "/product/" +
-                                      wishlistItem.id
+                                      wishlistItem.productID
                                     }
                                   >
-                                    {wishlistItem.name}
+                                    {wishlistItem.productName}
                                   </Link>
                                 </td>
 
