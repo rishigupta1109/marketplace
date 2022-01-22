@@ -13,10 +13,11 @@ const MenuCart = ({ cartData, currency, removeFromCart }) => {
         <Fragment>
           <ul>
             {cartData.map((single, key) => {
-              const discountedPrice = getDiscountPrice(
-                single.price,
-                single.discount
-              );
+              // const discountedPrice = getDiscountPrice(
+              //   single.price,
+              //   single.discount
+              // );
+              const discountedPrice = single.discountedPrice;
               const finalProductPrice = (
                 single.price * currency.currencyRate
               ).toFixed(2);
