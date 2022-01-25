@@ -2,11 +2,12 @@ import PropTypes from "prop-types";
 import React, { useEffect, Suspense, lazy, useState } from "react";
 import ScrollToTop from "./helpers/scroll-top";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { ToastProvider } from "react-toast-notifications";
+
 import { multilanguage, loadLanguages } from "redux-multilanguage";
 import { connect } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
-
+import { fetchProducts } from "./redux/actions/productActions";
+import { useToasts } from "react-toast-notifications";
 // home pages
 const HomeFashion = lazy(() => import("./pages/home/HomeFashion"));
 const HomeFashionTwo = lazy(() => import("./pages/home/HomeFashionTwo"));
@@ -81,6 +82,7 @@ const Contact = lazy(() => import("./pages/other/Contact"));
 const MyAccount = lazy(() => import("./pages/other/MyAccount"));
 const LoginRegister = lazy(() => import("./pages/other/LoginRegister"));
 
+const Orders = lazy(() => import("./pages/other/Orders"));
 const Cart = lazy(() => import("./pages/other/Cart"));
 const Wishlist = lazy(() => import("./pages/other/Wishlist"));
 const Compare = lazy(() => import("./pages/other/Compare"));
@@ -100,9 +102,33 @@ const App = props => {
       })
     );
   });
+  const { addToast } = useToasts();
+  const fetchingErrorHandler = (err) => {
+    addToast(err, {
+      appearance: "warning",
+      autoDismiss: true
+    })
+  }
+  useEffect(() => {
+            fetch('http://localhost:9000/getProducts').then(
+          res => {
+            console.log(res);
+                if (res.status == 400) {
+              fetchingErrorHandler("Error while Fetching Products");
+            }
+            return res.json();
+          }
+        ).then(
+          data => {
+              fetchProducts(data);
+          }
+        ).catch(err => {
+          fetchingErrorHandler("Error while Fetching Products");
+        });
+   }, [])
   const [user, setLoginUser] = useState({});
   return (
-    <ToastProvider placement="bottom-left">
+   
       <BreadcrumbsProvider>
         <Router>
           <ScrollToTop>
@@ -122,7 +148,10 @@ const App = props => {
                   path={process.env.PUBLIC_URL + "/"}
                   component={HomeFashion}
                 /> */}
-
+                  <Route exact
+                  path={process.env.PUBLIC_URL + "/orders"}
+                  component={Orders}
+                />
                 {/* Homepages */}
                 <Route
                   path={process.env.PUBLIC_URL + "/home-fashion"}
@@ -230,6 +259,7 @@ const App = props => {
                   path={process.env.PUBLIC_URL + "/"}
                   component={ShopGridStandard}
                 />
+               
                 {/* <Route
                   path={process.env.PUBLIC_URL + "/shop-grid-standard"}
                   component={ShopGridStandard}
@@ -360,7 +390,7 @@ const App = props => {
           </ScrollToTop>
         </Router>
       </BreadcrumbsProvider>
-    </ToastProvider>
+    
   );
 };
 

@@ -9,7 +9,7 @@ const MobileNavMenu = ({ strings }) => {
       <ul>
         <li className="menu-item-has-children">
           <Link to={process.env.PUBLIC_URL + "/"}>{strings["home"]}</Link>
-          <ul className="sub-menu">
+          {/* <ul className="sub-menu">
             <li className="menu-item-has-children">
               <Link to={process.env.PUBLIC_URL + "/"}>
                 {strings["home_group_one"]}
@@ -156,10 +156,10 @@ const MobileNavMenu = ({ strings }) => {
                 </li>
               </ul>
             </li>
-          </ul>
+          </ul> */}
         </li>
 
-        <li className="menu-item-has-children">
+        {/* <li className="menu-item-has-children">
           <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
             {strings["shop"]}
           </Link>
@@ -276,30 +276,35 @@ const MobileNavMenu = ({ strings }) => {
           <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
             {strings["collection"]}
           </Link>
-        </li>
-        <li className="menu-item-has-children">
+        </li> */}
+        {/* <li className="menu-item-has-children">
           <Link to={process.env.PUBLIC_URL + "/"}>{strings["pages"]}</Link>
-          <ul className="sub-menu">
+          <ul className="sub-menu"> */}
             <li>
               <Link to={process.env.PUBLIC_URL + "/cart"}>
                 {strings["cart"]}
               </Link>
             </li>
             <li>
+              <Link to={process.env.PUBLIC_URL + "/orders"}>
+                Orders
+              </Link>
+            </li>
+            {/* <li>
               <Link to={process.env.PUBLIC_URL + "/checkout"}>
                 {strings["checkout"]}
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to={process.env.PUBLIC_URL + "/wishlist"}>
                 {strings["wishlist"]}
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to={process.env.PUBLIC_URL + "/compare"}>
                 {strings["compare"]}
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link to={process.env.PUBLIC_URL + "/my-account"}>
                 {strings["my_account"]}
@@ -320,14 +325,14 @@ const MobileNavMenu = ({ strings }) => {
                 {strings["contact_us"]}
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to={process.env.PUBLIC_URL + "/not-found"}>
                 {strings["404_page"]}
               </Link>
-            </li>
-          </ul>
-        </li>
-        <li className="menu-item-has-children">
+            </li> */}
+          {/* </ul>
+        </li> */}
+        {/* <li className="menu-item-has-children">
           <Link to={process.env.PUBLIC_URL + "/blog-standard"}>
             {strings["blog"]}
           </Link>
@@ -353,12 +358,12 @@ const MobileNavMenu = ({ strings }) => {
               </Link>
             </li>
           </ul>
-        </li>
-        <li>
+        </li> */}
+        {/* <li>
           <Link to={process.env.PUBLIC_URL + "/contact"}>
             {strings["contact_us"]}
           </Link>
-        </li>
+        </li> */}
       </ul>
     </nav>
   );
