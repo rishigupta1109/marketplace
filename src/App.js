@@ -83,6 +83,7 @@ const MyAccount = lazy(() => import("./pages/other/MyAccount"));
 const LoginRegister = lazy(() => import("./pages/other/LoginRegister"));
 
 const Orders = lazy(() => import("./pages/other/Orders"));
+const OrderDetail = lazy(() => import("./pages/other/OrderDetail"));
 const Cart = lazy(() => import("./pages/other/Cart"));
 const Wishlist = lazy(() => import("./pages/other/Wishlist"));
 const Compare = lazy(() => import("./pages/other/Compare"));
@@ -298,6 +299,12 @@ const App = props => {
                 />
 
                 {/* Shop product pages */}
+                <Route
+                  path={process.env.PUBLIC_URL + "/Orderdetail/:id"}
+                  render={routeProps => (
+                    <OrderDetail param={routeProps.match.params.id} key={routeProps.match.params.id} />
+                  )}
+                />
                 <Route
                   path={process.env.PUBLIC_URL + "/product/:id"}
                   render={routeProps => (

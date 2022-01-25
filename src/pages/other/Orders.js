@@ -4,6 +4,8 @@ import MetaTags from "react-meta-tags";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import LayoutOne from './../../layouts/LayoutOne';
 import { Link } from "react-router-dom";
+import { Button } from 'react-bootstrap';
+import Order from './../../components/orders/Order';
 const Orders = () => {
     return (
         <Fragment>
@@ -20,8 +22,13 @@ const Orders = () => {
         Orders
             </BreadcrumbsItem>
             <LayoutOne headerTop="visible">
-                <Breadcrumb />
-            
+          <Breadcrumb />
+          <div className="cart-main-area pt-90 pb-100">
+          <div className="container">
+          <>
+           <h3 className="cart-page-title">Your Orders </h3>
+            <Order /> 
+          </>
             <div className="cart-main-area pt-90 pb-100">
                 <div className="container">
                 <div className="row">
@@ -41,6 +48,8 @@ const Orders = () => {
               </div>
                 </div>
                 </div>
+                </div>
+                </div> 
                 </LayoutOne>
 
         </Fragment>
