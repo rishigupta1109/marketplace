@@ -103,6 +103,8 @@ const App = props => {
       })
     );
   });
+  const [user,SetUserLogin ] = useState({});
+
   const { addToast } = useToasts();
   const fetchingErrorHandler = (err) => {
     addToast(err, {
@@ -127,7 +129,6 @@ const App = props => {
           fetchingErrorHandler("Error while Fetching Products");
         });
    }, [])
-  const [user, setLoginUser] = useState({});
   return (
    
       <BreadcrumbsProvider>
@@ -256,9 +257,13 @@ const App = props => {
                 />
 
                 {/* Shop pages */}
-                <Route exact
+                <Route
                   path={process.env.PUBLIC_URL + "/"}
                   component={ShopGridStandard}
+                /> 
+                <Route exact
+                  path={process.env.PUBLIC_URL + "/"}
+                  element= {user && user._id ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
                 />
                
                 {/* <Route
@@ -365,7 +370,7 @@ const App = props => {
                 />
                 <Route
                   path={process.env.PUBLIC_URL + "/login-register"}
-                  setLoginUser = {setLoginUser}
+                  setLoginUser = {SetUserLogin}
                   render={props => (<LoginRegister {...props}/>)}
                 />
 
