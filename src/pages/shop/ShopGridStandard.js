@@ -23,7 +23,7 @@ const ShopGridStandard = ({location, products,isLogin}) => {
     const [sortedProducts, setSortedProducts] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState("");
     const pageLimit = 15;
-    const {pathname} = location;
+    // const {pathname} = location;
 
     const getLayout = (layout) => {
         setLayout(layout)

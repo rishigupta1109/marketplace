@@ -32,10 +32,10 @@ const LoginRegister = ({ location, setLoginUser }) => {
      
     })
     .then(res =>{
-        alert(res.data.message)
+        alert("Loggedin")
         setLoginUser(res.data.user)
       console.log(res.data);
-        // history.push("../cart")
+        history.push("/")
     })
   }
   const register = (e)=>{

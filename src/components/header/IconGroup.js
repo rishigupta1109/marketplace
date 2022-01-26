@@ -54,7 +54,7 @@ const IconGroup = ({
         <div className="account-dropdown">
           <ul>
             <li>
-              <Link to={process.env.PUBLIC_URL + "/login-register"}>Login/Register</Link>
+              {!isLogin && <Link to={process.env.PUBLIC_URL + "/login-register"}>Login/Register</Link>}
             </li>
             {/* <li>
               <Link to={process.env.PUBLIC_URL + "/login-register"}>
@@ -62,9 +62,9 @@ const IconGroup = ({
               </Link>
             </li> */}
             <li>
-              <Link to={process.env.PUBLIC_URL + "/my-account"}>
+              { isLogin&&<Link to={process.env.PUBLIC_URL + "/my-account"}>
                 my account
-              </Link>
+              </Link>}
             </li>
           </ul>
         </div>

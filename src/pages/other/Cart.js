@@ -46,7 +46,7 @@ const Cart = ({
         Cart
       </BreadcrumbsItem>
 
-      <LayoutOne headerTop="visible">
+      <LayoutOne  headerTop="visible">
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">

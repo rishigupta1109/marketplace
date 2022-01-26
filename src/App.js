@@ -257,15 +257,19 @@ const App = props => {
                 />
 
                 {/* Shop pages */}
-                <Route
+              {/* <Route
+                exact
                   path={process.env.PUBLIC_URL + "/"}
                   component={ShopGridStandard}
-                /> 
-                <Route exact
+                />  */}
+                {/* <Route exact
                   path={process.env.PUBLIC_URL + "/"}
                   element= {user && user._id ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
-                />
-               
+                /> */}
+              <Route exact path={process.env.PUBLIC_URL + "/"}>
+              
+              {user ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
+               </Route>
                 {/* <Route
                   path={process.env.PUBLIC_URL + "/shop-grid-standard"}
                   component={ShopGridStandard}
@@ -370,8 +374,8 @@ const App = props => {
                 />
                 <Route
                   path={process.env.PUBLIC_URL + "/login-register"}
-                  setLoginUser = {SetUserLogin}
-                  render={props => (<LoginRegister {...props}/>)}
+                 
+                  render={props => (<LoginRegister  setLoginUser = {SetUserLogin} {...props}/>)}
                 />
 
                 <Route

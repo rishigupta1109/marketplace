@@ -71,7 +71,7 @@ const HeaderOne = ({
           </div>
         </div>
         {/* mobile menu */}
-        <MobileMenu />
+        <MobileMenu isLogin={isLogin} />
       </div>
     </header>
   );

@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { multilanguage } from "redux-multilanguage";
 
-const MobileNavMenu = ({ strings }) => {
+const MobileNavMenu = ({isLogin, strings }) => {
   return (
     <nav className="offcanvas-navigation" id="offcanvas-navigation">
       <ul>
@@ -306,14 +306,14 @@ const MobileNavMenu = ({ strings }) => {
               </Link>
             </li> */}
             <li>
-              <Link to={process.env.PUBLIC_URL + "/my-account"}>
+              {isLogin&&<Link to={process.env.PUBLIC_URL + "/my-account"}>
                 {strings["my_account"]}
-              </Link>
+              </Link>}
             </li>
             <li>
-              <Link to={process.env.PUBLIC_URL + "/login-register"}>
+             {!isLogin&& <Link to={process.env.PUBLIC_URL + "/login-register"}>
                 {strings["login_register"]}
-              </Link>
+              </Link>}
             </li>
             <li>
               <Link to={process.env.PUBLIC_URL + "/about"}>
