@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import MenuCart from "./sub-components/MenuCart";
 import { removeFromCart } from "../../redux/actions/cartActions";
+import { render } from "react-dom";
 
 const IconGroup = ({
+  isLogin,
   currency,
   cartData,
   wishlistData,
@@ -48,6 +50,7 @@ const IconGroup = ({
         >
           <i className="pe-7s-user-female" />
         </button>
+        {/* {tog} */}
         <div className="account-dropdown">
           <ul>
             <li>

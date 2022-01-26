@@ -100,7 +100,7 @@ const App = props => {
       })
     );
   });
-  const [user, setLoginUser] = useState({});
+  const [user,SetUserLogin ] = useState({});
   return (
     <ToastProvider placement="bottom-left">
       <BreadcrumbsProvider>
@@ -226,9 +226,13 @@ const App = props => {
                 />
 
                 {/* Shop pages */}
-                <Route exact
+                <Route
                   path={process.env.PUBLIC_URL + "/"}
                   component={ShopGridStandard}
+                /> 
+                <Route exact
+                  path={process.env.PUBLIC_URL + "/"}
+                  element= {user && user._id ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
                 />
                 {/* <Route
                   path={process.env.PUBLIC_URL + "/shop-grid-standard"}
@@ -328,7 +332,7 @@ const App = props => {
                 />
                 <Route
                   path={process.env.PUBLIC_URL + "/login-register"}
-                  setLoginUser = {setLoginUser}
+                  setLoginUser = {SetUserLogin}
                   render={props => (<LoginRegister {...props}/>)}
                 />
 

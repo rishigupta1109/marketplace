@@ -11,7 +11,7 @@ import ShopSidebar from '../../wrappers/product/ShopSidebar';
 import ShopTopbar from '../../wrappers/product/ShopTopbar';
 import ShopProducts from '../../wrappers/product/ShopProducts';
 
-const ShopGridStandard = ({location, products}) => {
+const ShopGridStandard = ({location, products,isLogin}) => {
     const [layout, setLayout] = useState('grid three-column');
     const [sortType, setSortType] = useState('');
     const [sortValue, setSortValue] = useState('');
@@ -62,7 +62,7 @@ const ShopGridStandard = ({location, products}) => {
             {/* <BreadcrumbsItem to={process.env.PUBLIC_URL + '/'}>Home</BreadcrumbsItem>
             <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>Shop</BreadcrumbsItem> */}
 
-            <LayoutOne headerTop="visible">
+            <LayoutOne headerTop="visible" isLogin={isLogin}> 
                 {/* breadcrumb */}
                 {/* <Breadcrumb /> */}
 

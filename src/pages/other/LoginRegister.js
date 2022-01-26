@@ -33,7 +33,7 @@ const LoginRegister = ({ location, setLoginUser }) => {
     })
     .then(res =>{
         alert(res.data.message)
-      // setLoginUser(res.data.user)
+        setLoginUser(res.data.user)
       console.log(res.data);
         // history.push("../cart")
     })
