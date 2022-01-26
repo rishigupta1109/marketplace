@@ -90,7 +90,8 @@ const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
-
+const URL = "https://for-shop-back-end-t8osp4cky-shopbackend.vercel.app/";
+// const URL = "http://localhost:9000/";
 const App = props => {
   useEffect(() => {
     props.dispatch(
@@ -113,7 +114,7 @@ const App = props => {
     })
   }
   useEffect(() => {
-            fetch('http://localhost:9000/getProducts').then(
+            fetch(`${URL}getProducts`).then(
           res => {
             console.log(res);
                 if (res.status == 400) {
@@ -123,6 +124,7 @@ const App = props => {
           }
         ).then(
           data => {
+            console.log(data);
               fetchProducts(data);
           }
         ).catch(err => {

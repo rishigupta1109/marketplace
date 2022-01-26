@@ -6,7 +6,8 @@ import { getDiscountPrice } from "../../helpers/product";
 import Rating from "./sub-components/ProductRating";
 import ProductModal from "./ProductModal";
 import "../../assets/css/extras.css";
-const serverURL = "http://localhost:9000/static/";
+// const serverURL = "http://localhost:9000/static/";
+const serverURL = "https://for-shop-back-end-t8osp4cky-shopbackend.vercel.app/static/";
 const ProductGridListSingle = ({
   product,
   currency,
