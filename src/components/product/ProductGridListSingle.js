@@ -22,7 +22,10 @@ const ProductGridListSingle = ({
   const [modalShow, setModalShow] = useState(false);
   const { addToast } = useToasts();
 
-  const discountedPrice = getDiscountPrice(product.price, product.discount);
+  // const discountedPrice = getDiscountPrice(product.price, product.discount);
+  const discountedPrice = product.discountedPrice;
+  let discount =100- (discountedPrice / product.price) * 100;
+  discount = Math.floor(discount);
   const finalProductPrice = +(product.price * currency.currencyRate).toFixed(2);
   const finalDiscountedPrice = +(
     discountedPrice * currency.currencyRate
@@ -55,10 +58,10 @@ const ProductGridListSingle = ({
                 ""
               )}
             {/* </Link> */}
-            {product.discount  ? (
+            {discount  ? (
               <div className="product-img-badges">
-                {product.discount ? (
-                  <span className="pink">-{product.discount}%</span>
+                {discount ? (
+                  <span className="pink">-{discount}%</span>
                 ) : (
                   ""
                 )}
@@ -177,10 +180,10 @@ const ProductGridListSingle = ({
                       ""
                     )} */}
                   {/* </Link> */}
-                  {product.discount  ? (
+                  {discount  ? (
                     <div className="product-img-badges">
                       {product.discount ? (
-                        <span className="pink">-{product.discount}%</span>
+                        <span className="pink">-{discount}%</span>
                       ) : (
                         ""
                       )}

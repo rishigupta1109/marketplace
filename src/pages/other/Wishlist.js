@@ -65,10 +65,11 @@ const Wishlist = ({
                         </thead>
                         <tbody>
                           {wishlistItems.map((wishlistItem, key) => {
-                            const discountedPrice = getDiscountPrice(
-                              wishlistItem.price,
-                              wishlistItem.discount
-                            );
+                            // const discountedPrice = getDiscountPrice(
+                            //   wishlistItem.price,
+                            //   wishlistItem.discount
+                            // );
+                            const discountedPrice = wishlistItem.discountedPrice;
                             const finalProductPrice = (
                               wishlistItem.price * currency.currencyRate
                             ).toFixed(2);

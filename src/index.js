@@ -6,14 +6,14 @@ import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { save, load } from "redux-localstorage-simple";
 import { Provider } from "react-redux";
-import { fetchProducts } from "./redux/actions/productActions";
+import { ToastProvider } from "react-toast-notifications";
 import rootReducer from "./redux/reducers/rootReducer";
 import products from "./data/products.json";
 import App from "./App";
 import "./assets/scss/style.scss";
 import * as serviceWorker from "./serviceWorker";
-
 import { composeWithDevTools } from "redux-devtools-extension";
+
 
 const store = createStore(
   rootReducer,
@@ -21,14 +21,13 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(thunk, save()))
 );
 
-// fetch products from json file
-fetch('http://localhost:9000/getProducts').then(res => res.json()).then(
-  data => { store.dispatch(fetchProducts(data)); console.log(data); }
-).catch(err => console.log(err));
+
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <ToastProvider placement="bottom-left">
+      <App />
+      </ToastProvider>
   </Provider>,
   document.getElementById("root")
 );

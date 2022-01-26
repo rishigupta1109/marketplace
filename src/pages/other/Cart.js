@@ -71,17 +71,19 @@ const Cart = ({
                         <tbody>
                           {cartItems.map((cartItem, key) => {
                             console.log(cartItem);
-                            const discountedPrice = getDiscountPrice(
-                              cartItem.price,
-                              cartItem.discount
-                            );
+                            const discountedPrice = cartItem.discountedPrice;
+                            // const discountedPrice = getDiscountPrice(
+                            //   cartItem.price,
+                            //   cartItem.discount
+                            // );
                             const finalProductPrice = (
                               cartItem.price * currency.currencyRate
                             ).toFixed(2);
                             const finalDiscountedPrice = (
                               discountedPrice * currency.currencyRate
                             ).toFixed(2);
-
+                            let discount =100- (discountedPrice / cartItem.price) * 100;
+                            discount = Math.floor(discount);
                             discountedPrice != null
                               ? (cartTotalPrice +=
                                   finalDiscountedPrice * cartItem.quantity)

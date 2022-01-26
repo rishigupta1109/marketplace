@@ -346,6 +346,11 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
                   {strings["cart"]}
                 </Link>
               </li>
+              <li>
+                <Link to={process.env.PUBLIC_URL + "/orders"}>
+                  Orders
+                </Link>
+              </li>
               {/* <li>
                 <Link to={process.env.PUBLIC_URL + "/checkout"}>
                   {strings["checkout"]}

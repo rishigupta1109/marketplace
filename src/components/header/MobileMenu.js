@@ -62,10 +62,10 @@ const MobileMenu = () => {
           <MobileNavMenu />
 
           {/* mobile language and currency */}
-          <MobileLangCurChange />
+          {/* <MobileLangCurChange /> */}
 
           {/* mobile widgets */}
-          <MobileWidgets />
+          {/* <MobileWidgets /> */}
         </div>
       </div>
     </div>
