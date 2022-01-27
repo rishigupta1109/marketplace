@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { getDiscountPrice } from "../../../helpers/product";
-const imageURL = "http://localhost:9000/static/";
+const imageURL = "https://infinite-sands-08332.herokuapp.com/static/";
 const MenuCart = ({ cartData, currency, removeFromCart }) => {
   let cartTotalPrice = 0;
   const { addToast } = useToasts();
