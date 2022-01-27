@@ -7,7 +7,7 @@ import Accordion from "react-bootstrap/Accordion";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 
-const MyAccount = ({ location }) => {
+const MyAccount = ({ location,isLogin }) => {
   const { pathname } = location;
 
   return (
@@ -23,7 +23,7 @@ const MyAccount = ({ location }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         My Account
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne headerTop="visible" isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="myaccount-area pb-80 pt-100">

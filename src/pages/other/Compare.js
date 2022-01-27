@@ -13,6 +13,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import Rating from "../../components/product/sub-components/ProductRating";
 
 const Compare = ({
+  isLogin,
   location,
   cartItems,
   compareItems,
@@ -36,7 +37,7 @@ const Compare = ({
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Compare
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne headerTop="visible" isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="compare-main-area pt-90 pb-100">

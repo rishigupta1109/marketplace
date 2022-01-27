@@ -9,9 +9,13 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import axios from 'axios';
 
-const URL = "https://infinite-sands-08332.herokuapp.com/";
+
+
+const URL = "https://for-shop-back-end-ly3e5is86-shopbackend.vercel.app/";
+
 
 const LoginRegister = ({ location, setLoginUser }) => {
+
   const history = useHistory()
   const { pathname } = location;
   const [user, setUser] = useState({
@@ -68,7 +72,7 @@ const LoginRegister = ({ location, setLoginUser }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Login Register
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne headerTop="visible" isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="login-register-area pt-100 pb-100">

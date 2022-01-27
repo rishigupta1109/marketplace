@@ -6,7 +6,7 @@ import LayoutOne from './../../layouts/LayoutOne';
 import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import Order from './../../components/orders/Order';
-const OrderDetail = (props) => {
+const OrderDetail = (props,{isLogin}) => {
     return (
             <Fragment>
       <MetaTags>
@@ -20,7 +20,7 @@ const OrderDetail = (props) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL +"/Orders" }>Orders</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL +"OrderDetail"+props.param }>{props.param}</BreadcrumbsItem>
-            <LayoutOne headerTop="visible">
+            <LayoutOne headerTop="visible" isLogin={isLogin}>
           <Breadcrumb />
           <div className="cart-main-area pt-90 pb-100">
           <div className="container">

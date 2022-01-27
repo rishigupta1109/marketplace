@@ -6,7 +6,7 @@ import LayoutOne from './../../layouts/LayoutOne';
 import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import Order from './../../components/orders/Order';
-const Orders = () => {
+const Orders = ({isLogin}) => {
     return (
         <Fragment>
       <MetaTags>
@@ -21,7 +21,7 @@ const Orders = () => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL +"Orders" }>
         Orders
             </BreadcrumbsItem>
-            <LayoutOne headerTop="visible">
+            <LayoutOne headerTop="visible" isLogin={isLogin}>
           <Breadcrumb />
           <div className="cart-main-area pt-90 pb-100">
           <div className="container">
