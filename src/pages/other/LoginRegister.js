@@ -9,6 +9,8 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import axios from 'axios';
 
+const URL = "https://for-shop-back-end-ly3e5is86-shopbackend.vercel.app/";
+
 const LoginRegister = ({ location, setLoginUser }) => {
   const history = useHistory()
   const { pathname } = location;
@@ -27,9 +29,8 @@ const LoginRegister = ({ location, setLoginUser }) => {
   }
   const login = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:9000/login", user, {
-      withCredentials: true,
-     
+    axios.post(`${URL}login`, user, {
+      withCredentials: false,
     })
     .then(res =>{
         alert("Loggedin")
@@ -45,7 +46,7 @@ const LoginRegister = ({ location, setLoginUser }) => {
     const { name, email, password, reEnterPassword } = user
     if(name && email && password && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email))){
         // alert("posted")
-        axios.post("http://localhost:9000/signup", user)
+        axios.post(`${URL}signup`, user)
         .then( res => {
             alert(res.data.message)
             // history.push("/cart")

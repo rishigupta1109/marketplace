@@ -4,7 +4,7 @@ import ScrollToTop from "./helpers/scroll-top";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { multilanguage, loadLanguages } from "redux-multilanguage";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 import { fetchProducts } from "./redux/actions/productActions";
 import { useToasts } from "react-toast-notifications";
@@ -104,7 +104,7 @@ const App = props => {
       })
     );
   });
-  const [user,SetUserLogin ] = useState({});
+  const [user,SetUserLogin ] = useState(null);
 
   const { addToast } = useToasts();
   const fetchingErrorHandler = (err) => {
@@ -113,6 +113,7 @@ const App = props => {
       autoDismiss: true
     })
   }
+  const dispatch = useDispatch();
   useEffect(() => {
             fetch(`${URL}getProducts`).then(
           res => {
@@ -125,12 +126,14 @@ const App = props => {
         ).then(
           data => {
             console.log(data);
-              fetchProducts(data);
+            const fn = fetchProducts(data);
+            fn(dispatch);
           }
         ).catch(err => {
           fetchingErrorHandler("Error while Fetching Products");
         });
-   }, [])
+    
+  }, [])
   return (
    
       <BreadcrumbsProvider>
