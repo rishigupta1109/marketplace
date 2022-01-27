@@ -44,15 +44,12 @@ h3.cart-page-title {
       }
       td.product-name {
         width: 435px;
-        text-align: left;
-        a {
+        text-align: center;
+        
           color: #333;
           font-size: 15px;
           font-weight: 500;
-          &:hover {
-            color: $theme-color;
-          }
-        }
+        
       }
       td.product-price-cart {
         width: 435px;

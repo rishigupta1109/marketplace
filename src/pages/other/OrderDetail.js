@@ -6,6 +6,9 @@ import LayoutOne from './../../layouts/LayoutOne';
 import { Link } from "react-router-dom";
 import { Button } from 'react-bootstrap';
 import Order from './../../components/orders/Order';
+import OrderStatus from "../../components/orders/OrderStatus";
+import OrderProductList from "../../components/orders/OrderProductList";
+import CustomerDetail from "../../components/orders/CustomerDetails";
 const OrderDetail = (props,{isLogin}) => {
     return (
             <Fragment>
@@ -25,8 +28,11 @@ const OrderDetail = (props,{isLogin}) => {
           <div className="cart-main-area pt-90 pb-100">
           <div className="container">
           <>
-           <h3 className="cart-page-title">Your Order </h3>
+           <h3 className="cart-page-title">Your Order</h3>
            
+                    <OrderStatus></OrderStatus>
+                <OrderProductList />
+                <CustomerDetail/>
           </>
            
                 </div>
