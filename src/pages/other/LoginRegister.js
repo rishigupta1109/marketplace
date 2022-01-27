@@ -9,7 +9,7 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import axios from 'axios';
 
-const URL = "https://for-shop-back-end-ly3e5is86-shopbackend.vercel.app/";
+const URL = "https://infinite-sands-08332.herokuapp.com/";
 
 const LoginRegister = ({ location, setLoginUser }) => {
   const history = useHistory()

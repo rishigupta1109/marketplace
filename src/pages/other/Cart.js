@@ -17,7 +17,7 @@ import {
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 // const imageURL = "http://localhost:9000/static/";
-const imageURL = "https://for-shop-back-end-t8osp4cky-shopbackend.vercel.app/static/";
+const imageURL = "https://infinite-sands-08332.herokuapp.com/static/";
 const Cart = ({
   location,
   cartItems,
