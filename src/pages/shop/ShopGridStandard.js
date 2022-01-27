@@ -3,7 +3,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import MetaTags from 'react-meta-tags';
 import Paginator from 'react-hooks-paginator';
 import { BreadcrumbsItem } from 'react-breadcrumbs-dynamic';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { getSortedProducts } from '../../helpers/product';
 import LayoutOne from '../../layouts/LayoutOne';
 import Breadcrumb from '../../wrappers/breadcrumb/Breadcrumb';
@@ -11,7 +11,7 @@ import ShopSidebar from '../../wrappers/product/ShopSidebar';
 import ShopTopbar from '../../wrappers/product/ShopTopbar';
 import ShopProducts from '../../wrappers/product/ShopProducts';
 
-const ShopGridStandard = ({location, products,isLogin}) => {
+const ShopGridStandard = ({location,Products,isLogin}) => {
     const [layout, setLayout] = useState('grid three-column');
     const [sortType, setSortType] = useState('');
     const [sortValue, setSortValue] = useState('');
@@ -22,9 +22,14 @@ const ShopGridStandard = ({location, products,isLogin}) => {
     const [currentData, setCurrentData] = useState([]);
     const [sortedProducts, setSortedProducts] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState("");
+    const [products, setProducts] = useState([]);
     const pageLimit = 15;
     // const {pathname} = location;
-
+    const ProductData = useSelector(state => {  return state.productData.products });
+    useEffect(() => {
+        setProducts(ProductData);
+    }, [ProductData])
+    console.log(products);
     const getLayout = (layout) => {
         setLayout(layout)
     }
@@ -110,6 +115,7 @@ ShopGridStandard.propTypes = {
 }
 
 const mapStateToProps = state => {
+    console.log(state.productData.products);
     return{
         products: state.productData.products
     }

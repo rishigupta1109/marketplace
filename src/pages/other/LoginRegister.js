@@ -9,7 +9,13 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import axios from 'axios';
 
+<<<<<<< HEAD
 const LoginRegister = ({ location, setLoginUser,isLogin }) => {
+=======
+const URL = "https://for-shop-back-end-ly3e5is86-shopbackend.vercel.app/";
+
+const LoginRegister = ({ location, setLoginUser }) => {
+>>>>>>> d62449ac38c39aab6ddefbad9464511450bd7fac
   const history = useHistory()
   const { pathname } = location;
   const [user, setUser] = useState({
@@ -27,9 +33,8 @@ const LoginRegister = ({ location, setLoginUser,isLogin }) => {
   }
   const login = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:9000/login", user, {
-      withCredentials: true,
-     
+    axios.post(`${URL}login`, user, {
+      withCredentials: false,
     })
     .then(res =>{
         alert("Loggedin")
@@ -45,8 +50,12 @@ const LoginRegister = ({ location, setLoginUser,isLogin }) => {
     const { name, email, password, reEnterPassword } = user
     if(name && email && password && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email))){
         // alert("posted")
+<<<<<<< HEAD
         // axios.post("http://localhost:9000/signup", user)
         axios.post("https://for-shop-back-end-t8osp4cky-shopbackend.vercel.app/",user)
+=======
+        axios.post(`${URL}signup`, user)
+>>>>>>> d62449ac38c39aab6ddefbad9464511450bd7fac
         .then( res => {
             alert(res.data.message)
             // history.push("/cart")

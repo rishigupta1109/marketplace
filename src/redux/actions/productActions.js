@@ -7,6 +7,7 @@ const fetchProductsSuccess = products => ({
 
 // fetch products
 export const fetchProducts = products => {
+ 
   return dispatch => {
     dispatch(fetchProductsSuccess(products));
   };
