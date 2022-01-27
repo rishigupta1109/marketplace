@@ -14,7 +14,7 @@ import axios from 'axios';
 const URL = "https://infinite-sands-08332.herokuapp.com/";
 
 
-const LoginRegister = ({ location, setLoginUser }) => {
+const LoginRegister = ({ location, setLoginUser,isLogin }) => {
 
   const history = useHistory()
   const { pathname } = location;
