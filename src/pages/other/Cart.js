@@ -19,6 +19,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 // const imageURL = "http://localhost:9000/static/";
 const imageURL = "https://for-shop-back-end-t8osp4cky-shopbackend.vercel.app/static/";
 const Cart = ({
+  isLogin,
   location,
   cartItems,
   currency,
@@ -47,7 +48,7 @@ const Cart = ({
         Cart
       </BreadcrumbsItem>
 
-      <LayoutOne  headerTop="visible">
+      <LayoutOne  headerTop="visible" isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">

@@ -9,7 +9,7 @@ import RelatedProductSlider from "../../wrappers/product/RelatedProductSlider";
 import ProductDescriptionTab from "../../wrappers/product/ProductDescriptionTab";
 import ProductImageDescriptionSticky from "../../wrappers/product/ProductImageDescriptionSticky";
 
-const ProductSticky = ({ location, product }) => {
+const ProductSticky = ({ location, product,SetUserLogin }) => {
   const { pathname } = location;
 
   return (
@@ -27,7 +27,7 @@ const ProductSticky = ({ location, product }) => {
         Shop Product
       </BreadcrumbsItem>
 
-      <LayoutOne headerTop="visible">
+      <LayoutOne headerTop="visible" SetUserLogin={SetUserLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
 

@@ -11,7 +11,7 @@ import FunFactOne from "../../wrappers/fun-fact/FunFactOne";
 import TeamMemberOne from "../../wrappers/team-member/TeamMemberOne";
 import BrandLogoSliderOne from "../../wrappers/brand-logo/BrandLogoSliderOne";
 
-const About = ({ location }) => {
+const About = ({ location,isLogin }) => {
   const { pathname } = location;
 
   return (
@@ -27,7 +27,7 @@ const About = ({ location }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         About us
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne headerTop="visible" isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
 

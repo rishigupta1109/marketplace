@@ -6,7 +6,7 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 
-const NotFound = ({ location }) => {
+const NotFound = ({ location,SetUserLogin }) => {
   const { pathname } = location;
 
   return (
@@ -22,7 +22,7 @@ const NotFound = ({ location }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         404 page
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne headerTop="visible" SetUserLogin={SetUserLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="error-area pt-40 pb-100">

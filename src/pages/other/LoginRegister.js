@@ -9,7 +9,7 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import axios from 'axios';
 
-const LoginRegister = ({ location, setLoginUser }) => {
+const LoginRegister = ({ location, setLoginUser,isLogin }) => {
   const history = useHistory()
   const { pathname } = location;
   const [user, setUser] = useState({
@@ -45,7 +45,8 @@ const LoginRegister = ({ location, setLoginUser }) => {
     const { name, email, password, reEnterPassword } = user
     if(name && email && password && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email))){
         // alert("posted")
-        axios.post("http://localhost:9000/signup", user)
+        // axios.post("http://localhost:9000/signup", user)
+        axios.post("https://for-shop-back-end-t8osp4cky-shopbackend.vercel.app/",user)
         .then( res => {
             alert(res.data.message)
             // history.push("/cart")
@@ -67,7 +68,7 @@ const LoginRegister = ({ location, setLoginUser }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Login Register
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible">
+      <LayoutOne headerTop="visible" isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="login-register-area pt-100 pb-100">

@@ -104,7 +104,7 @@ const App = props => {
       })
     );
   });
-  const [user,SetUserLogin ] = useState({});
+  const [user,SetUserLogin ] = useState(false);
 
   const { addToast } = useToasts();
   const fetchingErrorHandler = (err) => {
@@ -152,10 +152,9 @@ const App = props => {
                   path={process.env.PUBLIC_URL + "/"}
                   component={HomeFashion}
                 /> */}
-                  <Route exact
-                  path={process.env.PUBLIC_URL + "/orders"}
-                  component={Orders}
-                />
+                <Route exact path={process.env.PUBLIC_URL + "/orders"}>
+                  {user? <Orders isLogin={true}/>:<Orders isLogin={false}/>}
+                </Route>
                 {/* Homepages */}
                 <Route
                   path={process.env.PUBLIC_URL + "/home-fashion"}
@@ -269,9 +268,8 @@ const App = props => {
                   element= {user && user._id ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
                 /> */}
               <Route exact path={process.env.PUBLIC_URL + "/"}>
-              
-              {user ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
-               </Route>
+                {user ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
+              </Route>
                 {/* <Route
                   path={process.env.PUBLIC_URL + "/shop-grid-standard"}
                   component={ShopGridStandard}
@@ -362,45 +360,53 @@ const App = props => {
                 />
 
                 {/* Other pages */}
-                <Route
-                  path={process.env.PUBLIC_URL + "/about"}
-                  component={About}
-                />
-                <Route
-                  path={process.env.PUBLIC_URL + "/contact"}
-                  component={Contact}
-                />
-                <Route
+                {/* <Route exact path={process.env.PUBLIC_URL + "/about"}>
+                    {user ? <About isLogin={true}/>:<About isLogin={false}/>}
+                </Route> */}
+                <Route exact path={process.env.PUBLIC_URL + "/about"}>
+                    {user ? <About isLogin={true} location={"/about"}/>:<About isLogin={false} location={"/about"}/>}
+               </Route>
+
+               <Route exact path={process.env.PUBLIC_URL + "/contact"}>
+                    {user ? <Contact isLogin={true} location={"/contact"}/>:<Contact isLogin={false} location={"/contact"}/>}
+               </Route>
+               
+
+               {/* <Route
                   path={process.env.PUBLIC_URL + "/my-account"}
                   component={MyAccount}
-                />
-                <Route
+                /> */}
+               <Route exact path={process.env.PUBLIC_URL + "/my-account"}>
+                    {user ? <MyAccount isLogin={true} location={"/my-account"}/>:<MyAccount isLogin={false} location={"/my-account"}/>}
+               </Route>
+                {/* <Route
                   path={process.env.PUBLIC_URL + "/login-register"}
                  
                   render={props => (<LoginRegister  setLoginUser = {SetUserLogin} {...props}/>)}
-                />
+                /> */}
+                <Route exact path={process.env.PUBLIC_URL + "/login-register"}>
+                    {user ? <LoginRegister setLoginUser={SetUserLogin} isLogin={true} location={"/login-register"}/>:<LoginRegister setLoginUser={SetUserLogin} isLogin={false} location={"/login-register"}/>}
+               </Route>
 
-                <Route
-                  path={process.env.PUBLIC_URL + "/cart"}
-                  component={Cart}
-                />
-                <Route
-                  path={process.env.PUBLIC_URL + "/wishlist"}
-                  component={Wishlist}
-                />
-                <Route
-                  path={process.env.PUBLIC_URL + "/compare"}
-                  component={Compare}
-                />
-                <Route
-                  path={process.env.PUBLIC_URL + "/checkout"}
-                  component={Checkout}
-                />
+                <Route exact path={process.env.PUBLIC_URL + "/cart"}>
+                    {user ? <Cart isLogin={true} location={"/cart"}/>:<Cart isLogin={false} location={"/cart"}/>}
+               </Route>
 
-                <Route
-                  path={process.env.PUBLIC_URL + "/not-found"}
-                  component={NotFound}
-                />
+               <Route exact path={process.env.PUBLIC_URL + "/wishlist"}>
+                    {user ? <Wishlist isLogin={true} location={"/wishlist"}/>:<Wishlist isLogin={false} location={"/wishlist"}/>}
+               </Route>
+
+               <Route exact path={process.env.PUBLIC_URL + "/compare"}>
+                    {user ? <Compare isLogin={true} location={"/compare"}/>:<Compare isLogin={false} location={"/compare"}/>}
+               </Route>
+
+                <Route exact path={process.env.PUBLIC_URL + "/checkout"}>
+                    {user ? <Checkout isLogin={true} location={"/checkout"}/>:<Checkout isLogin={false} location={"/checkout"}/>}
+               </Route>
+
+                <Route exact path={process.env.PUBLIC_URL + "/not-found"}>
+                    {user ? <NotFound isLogin={true} location={"/not-found"}/>:<NotFound isLogin={false} location={"/not-found"}/>}
+               </Route>
 
                 <Route exact component={NotFound} />
               </Switch>

@@ -9,7 +9,7 @@ import RelatedProductSlider from "../../wrappers/product/RelatedProductSlider";
 import ProductDescriptionTab from "../../wrappers/product/ProductDescriptionTab";
 import ProductImageDescription from "../../wrappers/product/ProductImageDescription";
 
-const ProductFixedImage = ({ location, product }) => {
+const ProductFixedImage = ({ location, product,isLogin }) => {
   const { pathname } = location;
 
   return (
@@ -27,7 +27,7 @@ const ProductFixedImage = ({ location, product }) => {
         Shop Product
       </BreadcrumbsItem>
 
-      <LayoutOne headerTop="visible">
+      <LayoutOne headerTop="visible" isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
 
