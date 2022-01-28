@@ -119,9 +119,57 @@ body {
 .icon-content {
     padding-bottom: 20px
 }
-
+.cart-table-content table tbody > tr td.product-quantity input.cart-plus-minus-box{
+    width: 35px;
+}
 @media screen and (max-width: 992px) {
     .icon-content {
         width: 20%
     }
+}
+@media screen and (max-width: 772px)  {
+    .cart-table-content table tbody > tr td.product-price-cart {
+        height: 180px;
+        width: 100px;
+    }
+    .product-price-cart{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .cart-table-content table tbody > tr td.product-quantity {
+        width: 100px;
+    }
+    .cart-table-content table tbody > tr td {
+        padding: 15px 0 15px 15px;
+    }
+    .cart-table-content table tbody > tr td.product-quantity input.cart-plus-minus-box{
+        width: 35px;
+    }
+    .cart-table-content table tbody > tr td.product-quantity .cart-plus-minus input.cart-plus-minus-box{
+        width: 55px;
+    }
+    .cart-table-content table thead > tr th {
+        padding: 15px 15px 15px;
+    }
+    .cart-plus-minus{
+        width:54px !important;
+    }
+}
+@media screen and (max-width:445px) {
+    .cart-table-content table tbody > tr td{
+        padding: 0;
+    }
+    .cart-table-content table thead > tr th {
+        padding: 10px 5px 10px;
+    }
+   
+}
+.table-responsive {
+    display: flex;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-direction: column;
 }

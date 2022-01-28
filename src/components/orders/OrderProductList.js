@@ -30,8 +30,7 @@ const OrderProductList = ({currency}) => {
               <table>
                 <thead>
                   <tr>
-                    <th>Image</th>
-                    <th>Product Name</th>
+                    <th>Product</th>
                     <th>Unit Price</th>
                     <th>Qty</th>
                     <th>Subtotal</th>
@@ -77,17 +76,16 @@ const OrderProductList = ({currency}) => {
                               alt=""
                             />
                           {/* </Link> */}
-                        </td>
-
-                        <td className="product-name">
+                        
                           {/* <Link
                             to={
                               process.env.PUBLIC_URL +
                               "/product/" +
                               product.productID
                             }
-                          > */}
+                          > */}<div className="product-name">
                             {product.productName}
+                          </div>
                           {/* </Link> */}
                           {product.selectedProductColor &&
                           product.selectedProductSize ? (
@@ -125,7 +123,7 @@ const OrderProductList = ({currency}) => {
                         </td>
 
                         <td className="product-quantity">
-                          <div className="cart-plus-minus">
+                         
                         
                             <input
                               className="cart-plus-minus-box"
@@ -134,7 +132,7 @@ const OrderProductList = ({currency}) => {
                               readOnly
                             />
 
-                          </div>
+                         
                         </td>
                         <td className="product-subtotal">
                           {discountedPrice !== null
@@ -153,7 +151,7 @@ const OrderProductList = ({currency}) => {
                     );
                   })}
                                 <tr>
-                                    <td colSpan={4} className="product-subtotal"><h4>Total</h4></td>
+                                    <td colSpan={3} className="product-subtotal"><h4>Total</h4></td>
                                     <td> <h4>$ {TotalPrice}</h4></td>
                                 </tr>
                 </tbody>
