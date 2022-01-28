@@ -8,6 +8,7 @@ import { render } from "react-dom";
 
 const IconGroup = ({
   isLogin,
+  setLoginUser,
   currency,
   cartData,
   wishlistData,
@@ -19,6 +20,9 @@ const IconGroup = ({
     e.currentTarget.nextSibling.classList.toggle("active");
   };
 
+  const Logout = ()=>{
+    setLoginUser = null;
+  }
   const triggerMobileMenu = () => {
     const offcanvasMobileMenu = document.querySelector(
       "#offcanvas-mobile-menu"
@@ -64,6 +68,11 @@ const IconGroup = ({
             <li>
               { isLogin&&<Link to={process.env.PUBLIC_URL + "/my-account"}>
                 my account
+              </Link>}
+            </li>
+            <li onClick={Logout}>
+              {isLogin && <Link to={process.env.PUBLIC_URL + "/login-register"}>
+                Log Out
               </Link>}
             </li>
           </ul>

@@ -7,6 +7,7 @@ import MobileMenu from "../../components/header/MobileMenu";
 import HeaderTop from "../../components/header/HeaderTop";
 
 const HeaderOne = ({
+  SetUserLogin,
   isLogin,
   layout,
   top,
@@ -66,7 +67,7 @@ const HeaderOne = ({
             </div>
             <div className="col-xl-2 col-lg-2 col-md-6 col-8">
               {/* Icon group */}
-              <IconGroup isLogin={isLogin}/>
+              <IconGroup isLogin={isLogin} SetUserLogin={SetUserLogin}/>
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import HeaderOne from "../wrappers/header/HeaderOne";
 import FooterOne from "../wrappers/footer/FooterOne";
 
 const LayoutOne = ({
+  SetUserLogin,
   isLogin,
   children,
   headerContainerClass,
@@ -14,6 +15,7 @@ const LayoutOne = ({
     <Fragment>
       <HeaderOne
         isLogin = {isLogin}
+        SetUserLogin = {SetUserLogin}
         layout={headerContainerClass}
         top={headerTop}
         headerPaddingClass={headerPaddingClass}

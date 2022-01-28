@@ -47,8 +47,9 @@ const LoginRegister = ({ location, setLoginUser,isLogin }) => {
     e.preventDefault();
     let emailPattern = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
     let emailPattern2 = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
+    let emailPattern3 = new RegExp(/^[a-zA-Z0-9]+\.+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
     const { name, email, password, reEnterPassword } = user
-    if(name && email && password && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email))){
+    if(name && email && password && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
         // alert("posted")
         axios.post(`${URL}signup`, user)
         .then( res => {

@@ -90,8 +90,8 @@ const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
-const URL = "https://infinite-sands-08332.herokuapp.com/";
-// const URL = "http://localhost:9000/";
+// const URL = "https://infinite-sands-08332.herokuapp.com/";
+const URL = "http://localhost:9000/";
 const App = props => {
   useEffect(() => {
     props.dispatch(
@@ -273,7 +273,7 @@ const App = props => {
                   element= {user && user._id ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
                 /> */}
               <Route exact path={process.env.PUBLIC_URL + "/"}>
-                {user ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
+                {user ? <ShopGridStandard isLogin={true} SetUserLogin={SetUserLogin}/>:<ShopGridStandard isLogin={false} SetUserLogin={SetUserLogin}/>}
               </Route>
                 {/* <Route
                   path={process.env.PUBLIC_URL + "/shop-grid-standard"}
