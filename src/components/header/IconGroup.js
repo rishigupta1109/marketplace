@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link,useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import MenuCart from "./sub-components/MenuCart";
 import { removeFromCart } from "../../redux/actions/cartActions";
 import { render } from "react-dom";
+import axios from 'axios';
 
 const IconGroup = ({
   isLogin,
@@ -20,8 +21,19 @@ const IconGroup = ({
     e.currentTarget.nextSibling.classList.toggle("active");
   };
 
+  const history = useHistory()
+
   const Logout = ()=>{
-    setLoginUser = null;
+    alert("Logging out")
+    axios.post(`http://localhost:9000/logout`,{
+      withCredentials: false,
+    })
+    .then(res =>{
+        alert("Logout Successful")
+        setLoginUser({})
+        console.log(res.data);
+        history.push("/")
+    })
   }
   const triggerMobileMenu = () => {
     const offcanvasMobileMenu = document.querySelector(
@@ -71,7 +83,7 @@ const IconGroup = ({
               </Link>}
             </li>
             <li onClick={Logout}>
-              {isLogin && <Link to={process.env.PUBLIC_URL + "/login-register"}>
+              {isLogin && <Link to={process.env.PUBLIC_URL + "/"}>
                 Log Out
               </Link>}
             </li>

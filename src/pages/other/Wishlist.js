@@ -6,6 +6,7 @@ import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import { getDiscountPrice } from "../../helpers/product";
+import "../../assets/css/OrderStatus.css"
 import {
   addToWishlist,
   removeFromWishlist,
@@ -58,8 +59,8 @@ const Wishlist = ({
                       <table>
                         <thead>
                           <tr>
-                            <th>Image</th>
-                            <th>Product Name</th>
+                          
+                            <th>Product</th>
                             <th>Unit Price</th>
                             <th>Add To Cart</th>
                             <th>action</th>
@@ -100,9 +101,7 @@ const Wishlist = ({
                                       alt=""
                                     />
                                   {/* </Link> */}
-                                </td>
-
-                                <td className="product-name text-center">
+                                
                                   {/* <Link
                                     to={
                                       process.env.PUBLIC_URL +

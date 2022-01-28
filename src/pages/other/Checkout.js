@@ -48,22 +48,13 @@ const Checkout = ({ location, cartItems, currency,isLogin }) => {
                           <input type="text" />
                         </div>
                       </div>
-                      <div className="col-lg-12">
-                        <div className="billing-info mb-20">
-                          <label>Company Name</label>
-                          <input type="text" />
-                        </div>
-                      </div>
+        
                       <div className="col-lg-12">
                         <div className="billing-select mb-20">
-                          <label>Country</label>
+                          <label>Delivery option</label>
                           <select>
-                            <option>Select a country</option>
-                            <option>Azerbaijan</option>
-                            <option>Bahamas</option>
-                            <option>Bahrain</option>
-                            <option>Bangladesh</option>
-                            <option>Barbados</option>
+                            <option>Pickup</option>
+                            <option>Home Delivery</option>
                           </select>
                         </div>
                       </div>
@@ -87,12 +78,12 @@ const Checkout = ({ location, cartItems, currency,isLogin }) => {
                           <input type="text" />
                         </div>
                       </div>
-                      <div className="col-lg-6 col-md-6">
+                      {/* <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
                           <label>State / County</label>
                           <input type="text" />
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
                           <label>Postcode / ZIP</label>

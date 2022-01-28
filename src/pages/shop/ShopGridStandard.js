@@ -29,7 +29,7 @@ const ShopGridStandard = ({location,Products,isLogin,SetUserLogin}) => {
     useEffect(() => {
         setProducts(ProductData);
     }, [ProductData])
-    console.log(products);
+   
     const getLayout = (layout) => {
         setLayout(layout)
     }
@@ -115,7 +115,7 @@ ShopGridStandard.propTypes = {
 }
 
 const mapStateToProps = state => {
-    console.log(state.productData.products);
+ 
     return{
         products: state.productData.products
     }

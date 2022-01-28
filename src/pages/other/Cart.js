@@ -1,4 +1,4 @@
-
+import "../../assets/css/OrderStatus.css"
 import PropTypes from "prop-types";
 import React, { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
@@ -62,8 +62,7 @@ const Cart = ({
                       <table>
                         <thead>
                           <tr>
-                            <th>Image</th>
-                            <th>Product Name</th>
+                            <th>Product</th>
                             <th>Unit Price</th>
                             <th>Qty</th>
                             <th>Subtotal</th>
@@ -110,9 +109,7 @@ const Cart = ({
                                       alt=""
                                     />
                                   {/* </Link> */}
-                                </td>
-
-                                <td className="product-name">
+                               
                                   {/* <Link
                                     to={
                                       process.env.PUBLIC_URL +
@@ -243,8 +240,8 @@ const Cart = ({
                   </div>
                 </div>
 
-                <div className="row">
-                  <div className="col-lg-4 col-md-6">
+                <div className="row justify-content-center">
+                  {/* <div className="col-lg-4 col-md-6">
                     <div className="cart-tax">
                       <div className="title-wrap">
                         <h4 className="cart-bottom-title section-bg-gray">
@@ -305,7 +302,7 @@ const Cart = ({
                         </form>
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="col-lg-4 col-md-12">
                     <div className="grand-totall">
@@ -327,6 +324,7 @@ const Cart = ({
                           {currency.currencySymbol + cartTotalPrice.toFixed(2)}
                         </span>
                       </h4>
+                      
                       <Link to={process.env.PUBLIC_URL + "/checkout"}>
                         Proceed to Checkout
                       </Link>
