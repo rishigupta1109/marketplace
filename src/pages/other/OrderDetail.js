@@ -28,7 +28,7 @@ const OrderDetail = (props,{isLogin}) => {
           <div className="cart-main-area pt-90 pb-100">
           <div className="container">
           <>
-           <h3 className="cart-page-title">Your Order</h3>
+           <h2 className="cart-page-title">Your Order</h2>
            
                     <OrderStatus></OrderStatus>
                 <OrderProductList />

@@ -10,8 +10,8 @@ body {
     z-index: 0;
     background-color: #f9f9f9;
     padding-bottom: 20px;
-    margin-top: 90px;
-    margin-bottom: 90px;
+    margin-top: 20px;
+    margin-bottom: 20px;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     -moz-border-radius: 10px;
@@ -122,6 +122,6 @@ body {
 
 @media screen and (max-width: 992px) {
     .icon-content {
-        width: 50%
+        width: 20%
     }
 }
