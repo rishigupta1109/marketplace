@@ -273,7 +273,7 @@ const App = props => {
                   element= {user && user._id ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
                 /> */}
               <Route exact path={process.env.PUBLIC_URL + "/"}>
-                {user ? <ShopGridStandard isLogin={true} SetUserLogin={SetUserLogin}/>:<ShopGridStandard isLogin={false} SetUserLogin={SetUserLogin}/>}
+                {user ? <ShopGridStandard  isLogin={true} SetUserLogin={SetUserLogin}/>:<ShopGridStandard SetUserLogin={SetUserLogin} isLogin={false} />}
               </Route>
                 {/* <Route
                   path={process.env.PUBLIC_URL + "/shop-grid-standard"}
@@ -387,18 +387,18 @@ const App = props => {
                 {/* <Route
                   path={process.env.PUBLIC_URL + "/login-register"}
                  
-                  render={props => (<LoginRegister  setLoginUser = {SetUserLogin} {...props}/>)}
+                  render={props => (<LoginRegister  SetUserLogin = {SetUserLogin} {...props}/>)}
                 /> */}
                 <Route exact path={process.env.PUBLIC_URL + "/login-register"}>
-                    {user ? <LoginRegister setLoginUser={SetUserLogin} isLogin={true} location={"/login-register"}/>:<LoginRegister setLoginUser={SetUserLogin} isLogin={false} location={"/login-register"}/>}
+                    {user ? <LoginRegister SetUserLogin={SetUserLogin} isLogin={true} location={{pathname:"/login-register"}}/>:<LoginRegister SetUserLogin={SetUserLogin} isLogin={false} location={{pathname:"/login-register"}}/>}
                </Route>
 
                 <Route exact path={process.env.PUBLIC_URL + "/cart"}>
-                    {user ? <Cart isLogin={true} location={"/cart"}/>:<Cart isLogin={false} location={"/cart"}/>}
+                    {user ? <Cart SetUserLogin={SetUserLogin} isLogin={true} location={"/cart"}/>:<Cart SetUserLogin={SetUserLogin} isLogin={false} location={"/cart"}/>}
                </Route>
 
                <Route exact path={process.env.PUBLIC_URL + "/wishlist"}>
-                    {user ? <Wishlist isLogin={true} location={"/wishlist"}/>:<Wishlist isLogin={false} location={"/wishlist"}/>}
+                    {user ? <Wishlist SetUserLogin={SetUserLogin} isLogin={true} location={"/wishlist"}/>:<Wishlist SetUserLogin={SetUserLogin} isLogin={false} location={"/wishlist"}/>}
                </Route>
 
                <Route exact path={process.env.PUBLIC_URL + "/compare"}>
@@ -406,7 +406,7 @@ const App = props => {
                </Route>
 
                 <Route exact path={process.env.PUBLIC_URL + "/checkout"}>
-                    {user ? <Checkout isLogin={true} location={"/checkout"}/>:<Checkout isLogin={false} location={"/checkout"}/>}
+                    {user ? <Checkout SetUserLogin={SetUserLogin} isLogin={true} location={"/checkout"}/>:<Checkout SetUserLogin={SetUserLogin} isLogin={false} location={"/checkout"}/>}
                </Route>
 
                 <Route exact path={process.env.PUBLIC_URL + "/not-found"}>

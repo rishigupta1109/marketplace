@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const IconGroup = ({
   isLogin,
-  setLoginUser,
+  SetUserLogin,
   currency,
   cartData,
   wishlistData,
@@ -25,12 +25,12 @@ const IconGroup = ({
 
   const Logout = ()=>{
     alert("Logging out")
-    axios.post(`http://localhost:9000/logout`,{
+    axios.get(`http://localhost:9000/logout`,{
       withCredentials: false,
     })
     .then(res =>{
         alert("Logout Successful")
-        setLoginUser({})
+        SetUserLogin(null)
         console.log(res.data);
         history.push("/")
     })
@@ -115,6 +115,7 @@ const IconGroup = ({
         </button>
         {/* menu cart */}
         <MenuCart
+          isLogin={isLogin}
           cartData={cartData}
           currency={currency}
           removeFromCart={removeFromCart}

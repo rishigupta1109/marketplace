@@ -20,6 +20,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 const imageURL = "https://infinite-sands-08332.herokuapp.com/static/";
 const Cart = ({
   isLogin,
+  SetUserLogin,
   location,
   cartItems,
   currency,
@@ -48,7 +49,7 @@ const Cart = ({
         Cart
       </BreadcrumbsItem>
 
-      <LayoutOne  headerTop="visible" isLogin={isLogin}>
+      <LayoutOne SetUserLogin={SetUserLogin}  headerTop="visible" isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">
@@ -325,9 +326,17 @@ const Cart = ({
                         </span>
                       </h4>
                       
-                      <Link to={process.env.PUBLIC_URL + "/checkout"}>
+                   {isLogin?<Link to={process.env.PUBLIC_URL + "/checkout"}>
                         Proceed to Checkout
-                      </Link>
+                      </Link>:<Link onClick={()=>{
+                          addToast("Login to checkout", {
+                            appearance: "warning",
+                            autoDismiss: true
+                          });
+                      }} to={process.env.PUBLIC_URL + "/login-register"}>
+                        Proceed to Checkout
+                      </Link>}
+
                     </div>
                   </div>
                 </div>

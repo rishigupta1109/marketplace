@@ -15,7 +15,7 @@ import axios from 'axios';
 const URL = "http://localhost:9000/";
 
 
-const LoginRegister = ({ location, setLoginUser,isLogin }) => {
+const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
 
   const history = useHistory()
   const { pathname } = location;
@@ -39,7 +39,7 @@ const LoginRegister = ({ location, setLoginUser,isLogin }) => {
     })
     .then(res =>{
         alert("Loggedin")
-        setLoginUser(res.data.user)
+        SetUserLogin(res.data.user)
       console.log(res.data);
         history.push("/")
     })
@@ -74,7 +74,7 @@ const LoginRegister = ({ location, setLoginUser,isLogin }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Login Register
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible" isLogin={isLogin}>
+      <LayoutOne headerTop="visible" SetUserLogin={SetUserLogin} isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="login-register-area pt-100 pb-100">

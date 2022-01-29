@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import { getDiscountPrice } from "../../../helpers/product";
 const imageURL = "https://infinite-sands-08332.herokuapp.com/static/";
-const MenuCart = ({ cartData, currency, removeFromCart }) => {
+const MenuCart = ({ cartData, currency, removeFromCart,isLogin }) => {
   let cartTotalPrice = 0;
   const { addToast } = useToasts();
   return (
@@ -86,12 +86,23 @@ const MenuCart = ({ cartData, currency, removeFromCart }) => {
             <Link className="default-btn" to={process.env.PUBLIC_URL + "/cart"}>
               view cart
             </Link>
-            <Link
+            {isLogin?<Link
               className="default-btn"
               to={process.env.PUBLIC_URL + "/checkout"}
             >
               checkout
-            </Link>
+            </Link>:<Link
+                className="default-btn"
+                onClick={() => {
+                  addToast("Login to Checkout", {
+                    appearance: "warning",
+                    autoDismiss: true
+                  })
+                }}
+              to={process.env.PUBLIC_URL + "/login-register"}
+            >
+              checkout
+            </Link>}
           </div>
         </Fragment>
       ) : (

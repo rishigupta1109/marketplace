@@ -19,6 +19,7 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 const imageURL = "https://infinite-sands-08332.herokuapp.com/static/";
 const Wishlist = ({
   isLogin,
+  SetUserLogin,
   location,
   cartItems,
   currency,
@@ -45,7 +46,7 @@ const Wishlist = ({
         Wishlist
       </BreadcrumbsItem>
 
-      <LayoutOne headerTop="visible" isLogin={isLogin}>
+      <LayoutOne SetUserLogin={SetUserLogin} headerTop="visible" isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">

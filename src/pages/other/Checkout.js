@@ -8,7 +8,7 @@ import { getDiscountPrice } from "../../helpers/product";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 
-const Checkout = ({ location, cartItems, currency,isLogin }) => {
+const Checkout = ({ location, cartItems, currency,isLogin,SetUserLogin }) => {
   const { pathname } = location;
   let cartTotalPrice = 0;
 
@@ -25,7 +25,7 @@ const Checkout = ({ location, cartItems, currency,isLogin }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Checkout
       </BreadcrumbsItem>
-      <LayoutOne headerTop="visible" isLogin={isLogin}>
+      <LayoutOne SetUserLogin={SetUserLogin} headerTop="visible" isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="checkout-area pt-95 pb-100">
@@ -60,36 +60,32 @@ const Checkout = ({ location, cartItems, currency,isLogin }) => {
                       </div>
                       <div className="col-lg-12">
                         <div className="billing-info mb-20">
-                          <label>Street Address</label>
+                          <label>Address</label>
                           <input
                             className="billing-address"
-                            placeholder="House number and street name"
-                            type="text"
-                          />
-                          <input
-                            placeholder="Apartment, suite, unit etc."
+                            placeholder="Address"
                             type="text"
                           />
                         </div>
                       </div>
-                      <div className="col-lg-12">
+                      {/* <div className="col-lg-12">
                         <div className="billing-info mb-20">
                           <label>Town / City</label>
                           <input type="text" />
                         </div>
-                      </div>
+                      </div> */}
                       {/* <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
                           <label>State / County</label>
                           <input type="text" />
                         </div>
                       </div> */}
-                      <div className="col-lg-6 col-md-6">
+                      {/* <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
                           <label>Postcode / ZIP</label>
                           <input type="text" />
                         </div>
-                      </div>
+                      </div> */}
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
                           <label>Phone</label>
@@ -132,10 +128,11 @@ const Checkout = ({ location, cartItems, currency,isLogin }) => {
                         <div className="your-order-middle">
                           <ul>
                             {cartItems.map((cartItem, key) => {
-                              const discountedPrice = getDiscountPrice(
-                                cartItem.price,
-                                cartItem.discount
-                              );
+                              // const discountedPrice = getDiscountPrice(
+                              //   cartItem.price,
+                              //   cartItem.discount
+                              // );
+                              const discountedPrice = cartItem.discountedPrice;
                               const finalProductPrice = (
                                 cartItem.price * currency.currencyRate
                               ).toFixed(2);
@@ -151,7 +148,7 @@ const Checkout = ({ location, cartItems, currency,isLogin }) => {
                               return (
                                 <li key={key}>
                                   <span className="order-middle-left">
-                                    {cartItem.name} X {cartItem.quantity}
+                                    {cartItem.productName} X {cartItem.quantity}
                                   </span>{" "}
                                   <span className="order-price">
                                     {discountedPrice !== null
@@ -203,7 +200,7 @@ const Checkout = ({ location, cartItems, currency,isLogin }) => {
                     </div>
                     <div className="item-empty-area__text">
                       No items found in cart to checkout <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/shop-grid-standard"}>
+                      <Link to={process.env.PUBLIC_URL + "/"}>
                         Shop Now
                       </Link>
                     </div>
