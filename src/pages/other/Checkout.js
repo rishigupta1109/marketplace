@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React, { Fragment,useState } from "react";
 import { Link } from "react-router-dom";
 import MetaTags from "react-meta-tags";
 import { connect } from "react-redux";
@@ -7,11 +7,75 @@ import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { getDiscountPrice } from "../../helpers/product";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-
-const Checkout = ({ location, cartItems, currency,isLogin,SetUserLogin }) => {
+import { useToasts } from "react-toast-notifications";
+import axios from 'axios';
+const URL = "https://infinite-sands-08332.herokuapp.com/";
+// const URL = "http://localhost:9000/";
+const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin }) => {
   const { pathname } = location;
+  let {addToast} = useToasts();
   let cartTotalPrice = 0;
+  const [name, setName] = useState("");
+  const [deliverOption, setDeliverOption] = useState("Pickup");
+  const [address, setAddress] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [note, setNote] = useState("");
+  const isValid = () => {
+    let emailPattern = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
+    let emailPattern2 = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
+    let emailPattern3 = new RegExp(/^[a-zA-Z0-9]+\.+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
+    let valid = [0, 1, 0, 0, 0, 1];
+    let validityof=["Name","deliveryOption","Address","Phone Number","Email","Note"]
+    if (name.trim().length > 0) valid[0] = 1;
+    if (deliverOption!=="Pickup"&&address.trim().length>0) valid[2] = 1;
+    if (deliverOption==="Pickup") valid[2] = 1;
+    if (phone.trim().length === 10) valid[3] = 1;
+    if ((emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))) valid[4] = 1;
+    for (let i = 0; i < 6;i++) {
+      if (valid[i] === 0) {
 
+        addToast(`Please Write valid ${validityof[i]}`, 
+          {
+            appearance: "warning",
+            autoDismiss: true
+          }
+        )
+        return false;
+      }
+    }
+    return true;
+    
+
+  }
+  const placeOrder = () => {
+    if (isValid()) {
+      const orderData = {
+        userID: user,
+        name,
+        address,
+        phone,
+        email,
+        note,
+        deliverOption,
+        products:cartItems
+      }
+      axios.post(`${URL}placeOrder`, 
+        orderData).then(res => {
+          console.log(res);
+          addToast("Order Placed Successfully",{
+            appearance:"success",
+            autoDismiss:true
+          })
+          setName("");
+          setAddress("");
+          setNote("");
+          setPhone("");
+          setEmail("");
+        })
+    }
+  }
+  console.log(user);
   return (
     <Fragment>
       <MetaTags>
@@ -38,36 +102,38 @@ const Checkout = ({ location, cartItems, currency,isLogin,SetUserLogin }) => {
                     <div className="row">
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
-                          <label>First Name</label>
-                          <input type="text" />
+                          <label>Name</label>
+                          <input type="text" onChange={(e)=>setName(e.target.value)} value={name} />
                         </div>
                       </div>
-                      <div className="col-lg-6 col-md-6">
+                      {/* <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
                           <label>Last Name</label>
                           <input type="text" />
                         </div>
-                      </div>
+                      </div> */}
         
                       <div className="col-lg-12">
                         <div className="billing-select mb-20">
                           <label>Delivery option</label>
-                          <select>
+                          <select onChange={(e)=>setDeliverOption(e.target.value)} value={deliverOption}>
                             <option>Pickup</option>
                             <option>Home Delivery</option>
                           </select>
                         </div>
                       </div>
-                      <div className="col-lg-12">
+                    {deliverOption!=="Pickup"&&  <div className="col-lg-12">
                         <div className="billing-info mb-20">
                           <label>Address</label>
                           <input
+                          
                             className="billing-address"
                             placeholder="Address"
                             type="text"
+                            onChange={(e)=>setAddress(e.target.value)} value={address}
                           />
                         </div>
-                      </div>
+                      </div>}
                       {/* <div className="col-lg-12">
                         <div className="billing-info mb-20">
                           <label>Town / City</label>
@@ -89,13 +155,13 @@ const Checkout = ({ location, cartItems, currency,isLogin,SetUserLogin }) => {
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
                           <label>Phone</label>
-                          <input type="text" />
+                          <input type="number" onChange={(e) => { if(e.target.value.length<=10)setPhone(e.target.value);}} value={phone} />
                         </div>
                       </div>
                       <div className="col-lg-6 col-md-6">
                         <div className="billing-info mb-20">
                           <label>Email Address</label>
-                          <input type="text" />
+                          <input type="email" onChange={(e) => { setEmail(e.target.value);}} value={email}   />
                         </div>
                       </div>
                     </div>
@@ -107,7 +173,7 @@ const Checkout = ({ location, cartItems, currency,isLogin,SetUserLogin }) => {
                         <textarea
                           placeholder="Notes about your order, e.g. special notes for delivery. "
                           name="message"
-                          defaultValue={""}
+                          onChange={(e) => { setNote(e.target.value);}} value={note} 
                         />
                       </div>
                     </div>
@@ -186,7 +252,7 @@ const Checkout = ({ location, cartItems, currency,isLogin,SetUserLogin }) => {
                       <div className="payment-method"></div>
                     </div>
                     <div className="place-order mt-25">
-                      <button className="btn-hover">Place Order</button>
+                      <button onClick={placeOrder} className="btn-hover">Place Order</button>
                     </div>
                   </div>
                 </div>

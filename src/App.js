@@ -405,9 +405,9 @@ const App = props => {
                     {user ? <Compare isLogin={true} location={"/compare"}/>:<Compare isLogin={false} location={"/compare"}/>}
                </Route>
 
-                <Route exact path={process.env.PUBLIC_URL + "/checkout"}>
-                    {user ? <Checkout SetUserLogin={SetUserLogin} isLogin={true} location={"/checkout"}/>:<Checkout SetUserLogin={SetUserLogin} isLogin={false} location={"/checkout"}/>}
-               </Route>
+               {user!==null&& <Route exact path={process.env.PUBLIC_URL + "/checkout"}>
+                    {user ? <Checkout user={user} SetUserLogin={SetUserLogin} isLogin={true} location={{pathname:"/checkout"}}/>:<Checkout SetUserLogin={SetUserLogin} isLogin={false} location={{pathname:"/checkout"}}/>}
+               </Route>}
 
                 <Route exact path={process.env.PUBLIC_URL + "/not-found"}>
                     {user ? <NotFound isLogin={true} location={"/not-found"}/>:<NotFound isLogin={false} location={"/not-found"}/>}
