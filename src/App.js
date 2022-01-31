@@ -136,7 +136,7 @@ const App = props => {
           fetchingErrorHandler("Error while Fetching Products");
         });
     
-    fetch(`${URL}/checkLogin`, {
+    fetch(`${URL}checkLogin`, {
       credentials: 'include'
     }).then((res) => {
       return res.json();
