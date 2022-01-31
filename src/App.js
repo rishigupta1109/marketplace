@@ -136,7 +136,7 @@ const App = props => {
           fetchingErrorHandler("Error while Fetching Products");
         });
     
-    fetch(`http://localhost:9000/checkLogin`, {
+    fetch(`${URL}/checkLogin`, {
       credentials: 'include'
     }).then((res) => {
       return res.json();
@@ -405,7 +405,7 @@ const App = props => {
                </Route>
 
                 <Route exact path={process.env.PUBLIC_URL + "/cart"}>
-                    {user ? <Cart SetUserLogin={SetUserLogin} isLogin={true} location={"/cart"}/>:<Cart SetUserLogin={SetUserLogin} isLogin={false} location={"/cart"}/>}
+                    {user ? <Cart SetUserLogin={SetUserLogin} isLogin={true} location={{pathname:"/cart"}}/>:<Cart SetUserLogin={SetUserLogin} isLogin={false} location={{pathname:"/cart"}}/>}
                </Route>
 
                <Route exact path={process.env.PUBLIC_URL + "/wishlist"}>

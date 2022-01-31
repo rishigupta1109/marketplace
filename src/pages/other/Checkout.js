@@ -9,9 +9,12 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { useToasts } from "react-toast-notifications";
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
+import { removeAllFromCart} from "../../redux/actions/cartActions";
+import { decrementProduct} from "../../redux/actions/productActions";
 const URL = "https://infinite-sands-08332.herokuapp.com/";
 // const URL = "http://localhost:9000/";
-const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin }) => {
+const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin,removeAllFromCart ,decrementProduct}) => {
   const { pathname } = location;
   let {addToast} = useToasts();
   let cartTotalPrice = 0;
@@ -21,6 +24,7 @@ const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin }) =
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [note, setNote] = useState("");
+  const history = useHistory();
   const isValid = () => {
     let emailPattern = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
     let emailPattern2 = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
@@ -58,7 +62,8 @@ const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin }) =
         email,
         note,
         deliverOption,
-        products:cartItems
+        products: cartItems,
+        status:"PLACED"
       }
       axios.post(`${URL}placeOrder`, 
         orderData).then(res => {
@@ -72,10 +77,14 @@ const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin }) =
           setNote("");
           setPhone("");
           setEmail("");
+          for (let i = 0; i < cartItems.length; i++){
+            decrementProduct({ _id: cartItems[i]._id, stock: (cartItems[i].stock - cartItems[i].quantity) });
+          }
+          removeAllFromCart();
+          history.push('/');
         })
+      }
     }
-  }
-  console.log(user);
   return (
     <Fragment>
       <MetaTags>
@@ -293,5 +302,14 @@ const mapStateToProps = state => {
     currency: state.currencyData
   };
 };
-
-export default connect(mapStateToProps)(Checkout);
+const mapDispatchToProps = dispatch => {
+  return {
+    removeAllFromCart: () => {
+      dispatch(removeAllFromCart());
+    },
+    decrementProduct: (newStock) => {
+      dispatch(decrementProduct(newStock));
+    },
+  };
+};
+export default connect(mapStateToProps,mapDispatchToProps)(Checkout);
