@@ -8,6 +8,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 import { fetchProducts } from "./redux/actions/productActions";
 import { useToasts } from "react-toast-notifications";
+import Axios from "axios";
 // home pages
 const HomeFashion = lazy(() => import("./pages/home/HomeFashion"));
 const HomeFashionTwo = lazy(() => import("./pages/home/HomeFashionTwo"));
@@ -135,6 +136,16 @@ const App = props => {
           fetchingErrorHandler("Error while Fetching Products");
         });
     
+    fetch(`http://localhost:9000/checkLogin`, {
+      credentials: 'include'
+    }).then((res) => {
+      return res.json();
+    }).then(data => {
+      console.log(data);
+      if (data.isLogin) {
+        SetUserLogin(data.userID._id)
+      }
+        })
   }, [])
   return (
    

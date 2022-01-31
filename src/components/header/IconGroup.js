@@ -26,7 +26,7 @@ const IconGroup = ({
   const Logout = ()=>{
     alert("Logging out")
     axios.get(`http://localhost:9000/logout`,{
-      withCredentials: false,
+      withCredentials: true,
     })
     .then(res =>{
         alert("Logout Successful")

@@ -73,7 +73,7 @@ const ShopGridStandard = ({location,Products,isLogin,SetUserLogin}) => {
 
                 <div className="shop-area pt-95 pb-100">
                     <div className="container">
-                        <div className="row">
+                        <div className="row d-flex flex-row flex-wrap-reverse">
                             <div className="col-lg-3 order-2 order-lg-1">
                                 {/* shop sidebar */}
                                 <ShopSidebar

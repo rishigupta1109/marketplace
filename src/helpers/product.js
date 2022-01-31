@@ -93,12 +93,12 @@ export const getSortedProducts = (products, sortType, sortValue) => {
       }
       if (sortValue === "priceHighToLow") {
         return sortProducts.sort((a, b) => {
-          return b.price - a.price;
+          return b.discountedPrice - a.discountedPrice;
         });
       }
       if (sortValue === "priceLowToHigh") {
         return sortProducts.sort((a, b) => {
-          return a.price - b.price;
+          return a.discountedPrice - b.discountedPrice;
         });
       }
     }

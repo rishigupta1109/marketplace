@@ -11,8 +11,8 @@ import axios from 'axios';
 
 
 
-const URL = "https://infinite-sands-08332.herokuapp.com/";
-// const URL = "http://localhost:9000/";
+// const URL = "https://infinite-sands-08332.herokuapp.com/";
+const URL = "http://localhost:9000/";
 
 
 const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
@@ -35,7 +35,7 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
   const login = (e) => {
     e.preventDefault();
     axios.post(`${URL}login`, user, {
-      withCredentials: false,
+      withCredentials: true,
     })
     .then(res =>{
         alert("Loggedin")
