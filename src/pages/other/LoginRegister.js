@@ -25,6 +25,11 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
     reEnterPassword:"",
     email:"",
   })
+  function setCookie(name,value) {
+    var expires = "";
+    expires = "; max-age=" + 3*24*60*60*1000;
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
   const handleChange = e => {
     const {name, value} = e.target
     setUser({
@@ -39,7 +44,8 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
     })
     .then(res =>{
         alert("Loggedin")
-        SetUserLogin(res.data.user)
+      SetUserLogin(res.data.user)
+      setCookie("jwtoken", res.data.token);
       console.log(res.data);
         history.push("/")
     })
@@ -48,7 +54,7 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
     e.preventDefault();
     let emailPattern = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
     let emailPattern2 = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
-    let emailPattern3 = new RegExp(/^[a-zA-Z0-9]+\.+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
+    let emailPattern3 = new RegExp(/^[a-zA-Z0-9]+\.+[a-zA-Z0-9]+@[a-zA-Z0-9]+[A-Za-z]+\.[A-Za-z]+$/);
     const { name, email, password, reEnterPassword } = user
     if(name && email && password && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
         // alert("posted")
