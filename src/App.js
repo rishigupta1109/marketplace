@@ -93,6 +93,17 @@ const Checkout = lazy(() => import("./pages/other/Checkout"));
 const NotFound = lazy(() => import("./pages/other/NotFound"));
 const URL = "https://infinite-sands-08332.herokuapp.com/";
 // const URL = "http://localhost:9000/";
+function getCookie(name) {
+  var nameEQ = name + "=";
+  var ca = document.cookie.split(';');
+  for(var i=0;i < ca.length;i++) {
+      var c = ca[i];
+      while (c.charAt(0)==' ') c = c.substring(1,c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+  }
+  return null;
+}
+
 const App = props => {
   useEffect(() => {
     props.dispatch(
@@ -135,8 +146,11 @@ const App = props => {
         ).catch(err => {
           fetchingErrorHandler("Error while Fetching Products");
         });
-    
-    fetch(`${URL}checkLogin`, {
+    const cookie = getCookie("jwtoken");
+    console.log(cookie);
+    fetch(`${URL}checkLogin`,{method:"POST",body:JSON.stringify({"cookie":cookie}), headers: {
+      'Content-Type': 'application/json'
+    },}, {
       credentials: 'include'
     }).then((res) => {
       return res.json();
