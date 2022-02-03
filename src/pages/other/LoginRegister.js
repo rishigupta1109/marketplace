@@ -26,6 +26,11 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
     email:"",
     address: "",
   })
+  function setCookie(name,value) {
+    var expires = "";
+    expires = "; max-age=" + 3*24*60*60*1000;
+    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
+}
   const handleChange = e => {
     const {name, value} = e.target
     setUser({
@@ -40,7 +45,8 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
     })
     .then(res =>{
         alert("Loggedin")
-        SetUserLogin(res.data.user)
+      SetUserLogin(res.data.user)
+      setCookie("jwtoken", res.data.token);
       console.log(res.data);
         history.push("/")
     })
