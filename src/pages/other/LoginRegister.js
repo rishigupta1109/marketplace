@@ -11,8 +11,8 @@ import axios from 'axios';
 
 
 
-const URL = "https://infinite-sands-08332.herokuapp.com/";
-// const URL = "http://localhost:9000/";
+// const URL = "https://infinite-sands-08332.herokuapp.com/";
+const URL = "http://localhost:9000/";
 
 
 const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
@@ -20,10 +20,11 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
   const history = useHistory()
   const { pathname } = location;
   const [user, setUser] = useState({
-    name: "",
+    number: "",
     password: "",
     reEnterPassword:"",
     email:"",
+    address: "",
   })
   const handleChange = e => {
     const {name, value} = e.target
@@ -49,12 +50,12 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
     let emailPattern = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
     let emailPattern2 = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
     let emailPattern3 = new RegExp(/^[a-zA-Z0-9]+\.+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
-    const { name, email, password, reEnterPassword } = user
-    if(name && email && password && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
+    const { email,number, password, reEnterPassword, address } = user
+    if(email && password && number && address && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
         // alert("posted")
         axios.post(`${URL}signup`, user)
         .then( res => {
-            alert(res.data.message)
+            alert(res.data)
             // history.push("/cart")
         })
     }else{
@@ -122,10 +123,12 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
                         <div className="login-form-container">
                           <div className="login-register-form">
                             <form onSubmit={register}>
-                            <input type="text" name="name" value={user.name} placeholder="Name" onChange={handleChange}></input>
+                            {/* <input type="text" name="name" value={user.name} placeholder="Name" onChange={handleChange}></input> */}
                             <input type="text" name="email" value={user.email} placeholder="Email" onChange={handleChange}></input>
+                            <input type="phone" name="number" value={user.number} placeholder="Number" onChange={handleChange}></input>
                             <input type="password" name="password" value={user.password} placeholder="Password" onChange={handleChange}></input>
                             <input type="password" name="reEnterPassword" value={user.reEnterPassword} placeholder="Re-Enter Password" onChange={handleChange}></input>
+                            <input type="address" name="address" value={user.address} placeholder="Address" onChange={handleChange}></input>
                               <div className="button-box">
                                 <button type="submit" >
                                   <span>Register</span>

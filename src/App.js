@@ -91,8 +91,8 @@ const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
-const URL = "https://infinite-sands-08332.herokuapp.com/";
-// const URL = "http://localhost:9000/";
+// const URL = "https://infinite-sands-08332.herokuapp.com/";
+const URL = "http://localhost:9000/";
 const App = props => {
   useEffect(() => {
     props.dispatch(
@@ -118,7 +118,7 @@ const App = props => {
   }
   const dispatch = useDispatch();
   useEffect(() => {
-            fetch(`${URL}getProducts`).then(
+            fetch(`${URL}getProducts`,{mode: 'no-cors'}).then(
           res => {
             console.log(res);
                 if (res.status == 400) {
@@ -136,16 +136,16 @@ const App = props => {
           fetchingErrorHandler("Error while Fetching Products");
         });
     
-    fetch(`${URL}checkLogin`, {
-      credentials: 'include'
-    }).then((res) => {
-      return res.json();
-    }).then(data => {
-      console.log(data);
-      if (data.isLogin) {
-        SetUserLogin(data.userID._id)
-      }
-        })
+    // fetch(`${URL}checkLogin`, {
+    //   credentials: 'include'
+    // }).then((res) => {
+    //   return res.json();
+    // }).then(data => {
+    //   console.log(data);
+    //   if (data.isLogin) {
+    //     SetUserLogin(data.userID._id)
+    //   }
+    //     })
   }, [])
   return (
    
