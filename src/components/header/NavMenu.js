@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { multilanguage } from "redux-multilanguage";
 
-const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
+const NavMenu = ({ strings, menuWhiteClass, sidebarMenu,isLogin }) => {
   return (
     <div
       className={` ${
@@ -346,11 +346,11 @@ const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
                   {strings["cart"]}
                 </Link>
               </li>
-              <li>
+              {isLogin&&<li>
                 <Link to={process.env.PUBLIC_URL + "/orders"}>
                   Orders
                 </Link>
-              </li>
+              </li>}
               {/* <li>
                 <Link to={process.env.PUBLIC_URL + "/checkout"}>
                   {strings["checkout"]}

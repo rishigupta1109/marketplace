@@ -26,15 +26,19 @@ const IconGroup = ({
 
   const Logout = ()=>{
     alert("Logging out")
-    axios.get(`${URL}logout`,{
-      withCredentials: true,
-    })
-    .then(res =>{
+    // axios.get(`${URL}logout`,{
+    //   withCredentials: true,
+    // })
+    // .then(res =>{
+    //     alert("Logout Successful")
+    //     SetUserLogin(null)
+    //     console.log(res.data);
+    //     history.push("/")
+    // })
         alert("Logout Successful")
         SetUserLogin(null)
-        console.log(res.data);
+        document.cookie = "jwtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         history.push("/")
-    })
   }
   const triggerMobileMenu = () => {
     const offcanvasMobileMenu = document.querySelector(
