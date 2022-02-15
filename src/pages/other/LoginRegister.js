@@ -46,7 +46,7 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
     })
     .then(res =>{
         alert("Loggedin")
-      SetUserLogin(res.data.user)
+      SetUserLogin(res.data.userdata)
       setCookie("jwtoken", res.data.token);
       console.log(res.data);
         history.push("/")

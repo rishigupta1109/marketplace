@@ -6,14 +6,24 @@ import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
+import { useEffect } from "react";
 
-const MyAccount = ({ location,isLogin }) => {
+const MyAccount = ({ location, isLogin, user }) => {
+  console.log(user);
+  const [obj, setobj] = useState(user==null?{}:user);
   const { pathname } = location;
   const [editState, setEditState] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
+  const [name, setName] = useState(()=>(user&&user.name)?user.name:"");
+  const [email, setEmail] = useState(()=>(user&&user.email)?user.email:"");
+  const [address, setAddress] = useState(()=>(user&&user.address)?user.address:"");
+  const [phone, setPhone] = useState(() => (user && user.number) ? user.number : "");
+  useEffect(() => {
+    console.log("hellu",user);
+    setName(()=>(user&&user.name)?user.name:"");
+    setEmail(() => (user && user.email) ? user.email : "");
+    setAddress(()=>(user&&user.address)?user.address:"");
+    setPhone(() => (user && user.number) ? user.number : "");
+  }, [obj]);
   return (
     <Fragment>
       <MetaTags>
@@ -55,26 +65,26 @@ const MyAccount = ({ location,isLogin }) => {
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
                                   <label>Name</label>
-                              <input disabled={!editState} onClick={(e) => { setName(e.target.value)}} type="text" />
+                              <input value={name} disabled={!editState} onChange={(e) => { setName(e.target.value)}} type="text" />
                                 </div>
                               </div>
                              
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
                                   <label>Email Address</label>
-                                  <input disabled={!editState} onClick={(e) => { setEmail(e.target.value)}} type="email" />
+                                  <input value={email} disabled={!editState} onChange={(e) => { setEmail(e.target.value)}} type="email" />
                                 </div>
                               </div>
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
                                   <label>Address</label>
-                                  <input disabled={!editState} onClick={(e) => { setAddress(e.target.value)}} type="text" />
+                                  <input value={address} disabled={!editState} onChange={(e) => { setAddress(e.target.value)}} type="text" />
                                 </div>
                               </div>
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
                                   <label>Telephone</label>
-                                  <input disabled={!editState} onClick={(e) => { setPhone(e.target.value)}} type="number" />
+                                  <input value={phone} disabled={!editState} onChange={(e) => { setPhone(e.target.value)}} type="number" />
                                 </div>
                               </div>
                             </div>

@@ -157,7 +157,7 @@ const App = props => {
     }).then(data => {
       console.log(data);
       if (data.isLogin) {
-        SetUserLogin(data.userID._id)
+        SetUserLogin(data.userID);
       }
         })
   }, [])
@@ -407,7 +407,7 @@ const App = props => {
                   component={MyAccount}
                 /> */}
                <Route exact path={process.env.PUBLIC_URL + "/my-account"}>
-                    {user ? <MyAccount isLogin={true} location={{pathname:"/my-account"}}/>:<MyAccount isLogin={false} location={{pathname:"/my-account"}}/>}
+                    {user ? <MyAccount user={user} isLogin={true} location={{pathname:"/my-account"}}/>:<MyAccount user={user} isLogin={false} location={{pathname:"/my-account"}}/>}
                </Route>
                 {/* <Route
                   path={process.env.PUBLIC_URL + "/login-register"}
