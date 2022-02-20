@@ -7,10 +7,12 @@ import Accordion from "react-bootstrap/Accordion";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { useEffect } from "react";
-
-const MyAccount = ({ location, isLogin, user }) => {
-  console.log(user);
-  const [obj, setobj] = useState(user==null?{}:user);
+import axios from 'axios';
+// const URL = "https://infinite-sands-08332.herokuapp.com/";
+const URL = "http://localhost:9000/";
+const MyAccount = ({ location, isLogin, user,SetUserLogin }) => {
+  
+ 
   const { pathname } = location;
   const [editState, setEditState] = useState(false);
   const [name, setName] = useState(()=>(user&&user.name)?user.name:"");
@@ -23,7 +25,27 @@ const MyAccount = ({ location, isLogin, user }) => {
     setEmail(() => (user && user.email) ? user.email : "");
     setAddress(()=>(user&&user.address)?user.address:"");
     setPhone(() => (user && user.number) ? user.number : "");
-  }, [obj]);
+  }, [user]);
+  const saveDetails = () => {
+    let updateduser = { ...user, name, email, address, phone };
+    console.log(updateduser);
+    axios.post(`${URL}updateDetails`, updateduser)
+    .then( res => {
+      alert("ho gya kam");
+      SetUserLogin((state) => {
+        return { ...state, name, email, address, phone };
+      })
+      console.log(res.data);
+        // history.push("/cart")
+    })
+    setEditState(false);
+  }
+  let reset = () => {
+    setName(()=>(user&&user.name)?user.name:"");
+    setEmail(() => (user && user.email) ? user.email : "");
+    setAddress(()=>(user&&user.address)?user.address:"");
+    setPhone(() => (user && user.number) ? user.number : "");
+  }
   return (
     <Fragment>
       <MetaTags>
@@ -90,13 +112,13 @@ const MyAccount = ({ location, isLogin, user }) => {
                             </div>
                             <div className="billing-back-btn">
                              {editState===true&& <div className="billing-btn">
-                                <button type="submit">Save</button>
+                                <button onClick={saveDetails} type="submit">Save</button>
                               </div>}
                              {editState===false&& <div className="billing-btn">
                                 <button onClick={()=>setEditState(!editState)} type="submit">Edit</button>
                               </div>}
                              {editState===true&& <div className="billing-btn">
-                                <button style={{marginLeft:"5px"}} onClick={()=>setEditState(!editState)} type="submit">Cancel</button>
+                            <button style={{ marginLeft: "5px" }} onClick={() => { setEditState(!editState); reset(); }} type="submit">Cancel</button>
                               </div>}
                             </div>
                           </div>

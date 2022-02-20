@@ -20,10 +20,12 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
   const history = useHistory()
   const { pathname } = location;
   const [user, setUser] = useState({
+    name:"",
     number: "",
     password: "",
     reEnterPassword:"",
     email:"",
+    address: ""
   })
   function setCookie(name,value) {
     var expires = "";
@@ -56,8 +58,8 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
     let emailPattern = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
     let emailPattern2 = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
     let emailPattern3 = new RegExp(/^[a-zA-Z0-9]+\.+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
-    const {email,number, password, reEnterPassword} = user
-    if(email && password && number && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
+    const {name,email,number, password, reEnterPassword} = user
+    if(email&&name && password && number && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
         // alert("posted")
         axios.post(`${URL}signup`, user)
         .then( res => {
@@ -65,7 +67,7 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
             // history.push("/cart")
         })
       
-    }else if(!email || !password || !number){
+    }else if(!email || !password || !number||!name){
         alert("Please fill all the details")
     }
     else if(password!=reEnterPassword){
@@ -137,6 +139,7 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
                           <div className="login-register-form">
                             <form onSubmit={register}>
                             {/* <input type="text" name="name" value={user.name} placeholder="Name" onChange={handleChange}></input> */}
+                            <input type="text" name="name" value={user.name} placeholder="Full Name" onChange={handleChange} required></input>
                             <input type="text" name="email" value={user.email} placeholder="Email" onChange={handleChange} required></input>
                             <input type="phone" name="number" value={user.number} placeholder="Number" onChange={handleChange} required></input>
                             <input type="password" name="password" value={user.password} placeholder="Password" onChange={handleChange} required></input>

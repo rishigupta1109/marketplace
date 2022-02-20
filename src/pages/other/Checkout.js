@@ -16,13 +16,14 @@ const URL = "https://infinite-sands-08332.herokuapp.com/";
 // const URL = "http://localhost:9000/";
 const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin,removeAllFromCart ,decrementProduct}) => {
   const { pathname } = location;
+  console.log(user);
   let {addToast} = useToasts();
   let cartTotalPrice = 0;
-  const [name, setName] = useState("");
+  const [name, setName] = useState(user.name?user.name:"");
   const [deliverOption, setDeliverOption] = useState("Pickup");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState(user.address?user.address:"");
+  const [phone, setPhone] = useState(user.number?user.number:"");
+  const [email, setEmail] = useState(user.email?user.email:"");
   const [note, setNote] = useState("");
   const history = useHistory();
   const isValid = () => {
