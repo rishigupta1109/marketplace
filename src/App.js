@@ -91,8 +91,8 @@ const Compare = lazy(() => import("./pages/other/Compare"));
 const Checkout = lazy(() => import("./pages/other/Checkout"));
 
 const NotFound = lazy(() => import("./pages/other/NotFound"));
-// const URL = "https://infinite-sands-08332.herokuapp.com/";
-const URL = "http://localhost:9000/";
+const URL = "https://infinite-sands-08332.herokuapp.com/";
+// const URL = "http://localhost:9000/";
 function getCookie(name) {
   var nameEQ = name + "=";
   var ca = document.cookie.split(';');
