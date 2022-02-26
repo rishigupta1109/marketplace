@@ -48,6 +48,7 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
     .then(res =>{
         alert("Loggedin")
       SetUserLogin(res.data.userdata)
+      localStorage.setItem("user", JSON.stringify(res.data.userdata));
       setCookie("jwtoken", res.data.token);
       console.log(res.data);
         history.push("/")
@@ -62,7 +63,8 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
     if(email&&name && password && number && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
         // alert("posted")
         axios.post(`${URL}signup`, user)
-        .then( res => {
+          .then(res => {
+         
             alert(res.data)
             // history.push("/cart")
         })

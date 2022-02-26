@@ -173,3 +173,7 @@ body {
     -webkit-overflow-scrolling: touch;
     flex-direction: column;
 }
+#progressbar{
+    display: flex;
+    justify-content: center;
+}

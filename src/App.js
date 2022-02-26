@@ -148,19 +148,25 @@ const App = props => {
         });
     const cookie = getCookie("jwtoken");
     console.log(cookie);
-    fetch(`${URL}checkLogin`,{method:"POST",body:JSON.stringify({"cookie":cookie}), headers: {
-      'Content-Type': 'application/json'
-    },}, {
-      credentials: 'include'
-    }).then((res) => {
-      return res.json();
-    }).then(data => {
-      console.log(data);
-      if (data.isLogin) {
-        console.log(data.userdata);
-        SetUserLogin(data.userdata);
-      }
-        })
+    if (localStorage.getItem(user)) {
+      SetUserLogin(JSON.parse(localStorage.getItem("user")));
+    }
+    else {
+      fetch(`${URL}checkLogin`,{method:"POST",body:JSON.stringify({"cookie":cookie}), headers: {
+        'Content-Type': 'application/json'
+      },}, {
+        credentials: 'include'
+      }).then((res) => {
+        return res.json();
+      }).then(data => {
+        console.log(data);
+        if (data.isLogin) {
+          console.log(data.userdata);
+          SetUserLogin(data.userdata);
+          localStorage.setItem("user", data.userdata);
+        }
+          })
+    }
   }, [])
   return (
    
@@ -184,7 +190,7 @@ const App = props => {
                   component={HomeFashion}
                 /> */}
                 <Route exact path={process.env.PUBLIC_URL + "/orders"}>
-                  {user? <Orders isLogin={true}/>:<Orders isLogin={false}/>}
+                {user ? <Orders user={user} isLogin={true} SetUserLogin={SetUserLogin}/>:<Orders isLogin={false}/>}
                 </Route>
                 {/* Homepages */}
                 <Route
@@ -342,7 +348,7 @@ const App = props => {
                 <Route
                   path={process.env.PUBLIC_URL + "/Orderdetail/:id"}
                   render={routeProps => (
-                    <OrderDetail param={routeProps.match.params.id} key={routeProps.match.params.id} />
+                    <OrderDetail param={routeProps.match.params.id} isLogin={user!==null} key={routeProps.match.params.id} />
                   )}
                 />
                 <Route

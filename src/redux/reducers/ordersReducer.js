@@ -7,7 +7,6 @@ const initState = {
 const ordersReducer = (state = initState, action) => {
   if (action.type === FETCH_ORDERS_SUCCESS) {
     return {
-      ...state,
       orders: action.payload
     };
   }

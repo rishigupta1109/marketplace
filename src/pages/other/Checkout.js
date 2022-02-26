@@ -16,7 +16,7 @@ const URL = "https://infinite-sands-08332.herokuapp.com/";
 // const URL = "http://localhost:9000/";
 const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin,removeAllFromCart ,decrementProduct}) => {
   const { pathname } = location;
-  console.log(user);
+ 
   let {addToast} = useToasts();
   let cartTotalPrice = 0;
   const [name, setName] = useState(user.name?user.name:"");
@@ -35,7 +35,7 @@ const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin,remo
     if (name.trim().length > 0) valid[0] = 1;
     if (deliverOption!=="Pickup"&&address.trim().length>0) valid[2] = 1;
     if (deliverOption==="Pickup") valid[2] = 1;
-    if (phone.trim().length === 10) valid[3] = 1;
+    if ((phone+"").length === 10) valid[3] = 1;
     if ((emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))) valid[4] = 1;
     for (let i = 0; i < 6;i++) {
       if (valid[i] === 0) {

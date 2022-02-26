@@ -3,7 +3,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { multilanguage } from "redux-multilanguage";
 
-const NavMenu = ({ strings, menuWhiteClass, sidebarMenu,isLogin }) => {
+const NavMenu = ({ strings, menuWhiteClass, sidebarMenu }) => {
+  let isLogin = localStorage.getItem("user") ? true : false;
   return (
     <div
       className={` ${

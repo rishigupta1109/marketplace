@@ -8,8 +8,8 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { useEffect } from "react";
 import axios from 'axios';
-const URL = "https://infinite-sands-08332.herokuapp.com/";
-// const URL = "http://localhost:9000/";
+// const URL = "https://infinite-sands-08332.herokuapp.com/";
+const URL = "http://localhost:9000/";
 const MyAccount = ({ location, isLogin, user,SetUserLogin }) => {
   
  

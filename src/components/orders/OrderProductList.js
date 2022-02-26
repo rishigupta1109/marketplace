@@ -2,24 +2,24 @@
 import React ,{Fragment} from "react";
 import { connect } from "react-redux";
 const imageURL = "https://infinite-sands-08332.herokuapp.com/static/";
-const OrderProductList = ({currency}) => {
-    const orderedProducts = [
-        {
-            "_id": "61f149cb5c925a39ebcde2c3",
-            "productID": 4,
-            "productName": "product 5",
-            "stock": 4,
-            "category": [
-                "strategy"
-            ],
-            "quantity":"1",
-            "productType": "image",
-            "price": 2000,
-            "discountedPrice": 1500,
-            "image": "1643203019134-881877155final logo.png",
-            "__v": 0
-        }
-    ];
+const OrderProductList = ({currency,orderedProducts}) => {
+    // const orderedProducts = [
+    //     {
+    //         "_id": "61f149cb5c925a39ebcde2c3",
+    //         "productID": 4,
+    //         "productName": "product 5",
+    //         "stock": 4,
+    //         "category": [
+    //             "strategy"
+    //         ],
+    //         "quantity":"1",
+    //         "productType": "image",
+    //         "price": 2000,
+    //         "discountedPrice": 1500,
+    //         "image": "1643203019134-881877155final logo.png",
+    //         "__v": 0
+    //     }
+    // ];
     let TotalPrice = 0;
     return (
         <Fragment>
@@ -38,7 +38,7 @@ const OrderProductList = ({currency}) => {
                 </thead>
                 <tbody>
                   {orderedProducts.map((product, key) => {
-                    console.log(product);
+                 
                     const discountedPrice = product.discountedPrice;
                     // const discountedPrice = getDiscountPrice(
                     //   product.price,
