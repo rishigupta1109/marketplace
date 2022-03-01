@@ -16,7 +16,7 @@ const Orders = ({user, isLogin, SetUserLogin,ordersArray }) => {
   let dispatch = useDispatch();
   useEffect(() => {
     if(user&&user._id)
-      axios.post(`${URL}getOrders`, user._id).then(res => { setOrders(res.data); let fn = fetchOrders(res.data); fn(dispatch); });
+    {  axios.post(`${URL}getOrders`, {userID:user._id}).then(res => { setOrders(res.data); let fn = fetchOrders(res.data); fn(dispatch); });}
   },[user])
     return (
         <Fragment>

@@ -162,8 +162,9 @@ const App = props => {
         console.log(data);
         if (data.isLogin) {
           console.log(data.userdata);
+          if(data.userdata){
           SetUserLogin(data.userdata);
-          localStorage.setItem("user", data.userdata);
+          localStorage.setItem("user", data.userdata);}
         }
           })
     }

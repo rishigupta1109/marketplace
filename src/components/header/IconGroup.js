@@ -35,7 +35,8 @@ const IconGroup = ({
     //     console.log(res.data);
     //     history.push("/")
     // })
-        alert("Logout Successful")
+    alert("Logout Successful")
+    localStorage.removeItem("user");
         SetUserLogin(null)
         document.cookie = "jwtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         history.push("/")

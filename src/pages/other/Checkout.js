@@ -29,7 +29,7 @@ const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin,remo
   const isValid = () => {
     let emailPattern = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
     let emailPattern2 = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
-    let emailPattern3 = new RegExp(/^[a-zA-Z0-9]+\.+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
+    let emailPattern3 = new RegExp(/^[a-zA-Z0-9]+\.+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/);
     let valid = [0, 1, 0, 0, 0, 1];
     let validityof=["Name","deliveryOption","Address","Phone Number","Email","Note"]
     if (name.trim().length > 0) valid[0] = 1;

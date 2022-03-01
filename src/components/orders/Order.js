@@ -8,7 +8,6 @@ import { connect, useDispatch, useSelector } from "react-redux";
 const serverURL = "https://infinite-sands-08332.herokuapp.com/static/";
 const Order = ({data}) => {
     let totalprice = 0;
-    console.log(data);
     data.products.map((value) => {
         totalprice += value.discountedPrice * value.quantity;
     })
