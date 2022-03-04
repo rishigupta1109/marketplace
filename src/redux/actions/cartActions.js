@@ -2,6 +2,7 @@ export const ADD_TO_CART = "ADD_TO_CART";
 export const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 export const DELETE_FROM_CART = "DELETE_FROM_CART";
 export const DELETE_ALL_FROM_CART = "DELETE_ALL_FROM_CART";
+export const REPLACE_ALL_FROM_CART = "REPLACE_ALL_FROM_CART";
 
 //add to cart
 export const addToCart = (
@@ -68,6 +69,11 @@ export const removeAllFromCart = addToast => {
       });
     }
     dispatch({ type: DELETE_ALL_FROM_CART });
+  };
+};
+export const replace = () => {
+  return dispatch => {
+    dispatch({ type: "replace" });
   };
 };
 

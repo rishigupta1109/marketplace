@@ -51,7 +51,7 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
       localStorage.setItem("user", JSON.stringify(res.data.userdata));
       setCookie("jwtoken", res.data.token);
       console.log(res.data);
-        history.push("/")
+      history.goBack();
     })
   }
   const register = (e)=>{

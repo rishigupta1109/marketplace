@@ -3,7 +3,8 @@ import {
   ADD_TO_CART,
   DECREASE_QUANTITY,
   DELETE_FROM_CART,
-  DELETE_ALL_FROM_CART
+  DELETE_ALL_FROM_CART,
+  REPLACE_ALL_FROM_CART 
 } from "../actions/cartActions";
 
 const initState = [];
@@ -115,7 +116,9 @@ const cartReducer = (state = initState, action) => {
       return false;
     });
   }
-
+  if (action.type === REPLACE_ALL_FROM_CART) {
+    return action.payload;
+  }
   return state;
 };
 

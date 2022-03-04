@@ -1,6 +1,6 @@
 import "../../assets/css/OrderStatus.css"
 import PropTypes from "prop-types";
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState ,useEffect} from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import MetaTags from "react-meta-tags";
@@ -12,28 +12,87 @@ import {
   decrementQty,
   removeFromCart,
   cartItemStock,
-  removeAllFromCart
+  removeAllFromCart,
+  replace
 } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 // const imageURL = "http://localhost:9000/static/";
 const imageURL = "https://infinite-sands-08332.herokuapp.com/static/";
+const URL = "https://infinite-sands-08332.herokuapp.com/";
+// const URL = "http://localhost:9000/";
 const Cart = ({
   isLogin,
   SetUserLogin,
   location,
   cartItems,
+  products,
   currency,
   decrementQty,
   addToCart,
   removeFromCart,
+  replace,
   removeAllFromCart
 }) => {
   const [quantityCount] = useState(1);
   const { addToast } = useToasts();
+  const [Products, setProducts] = useState(products.products);
+  let CartItems = cartItems;
+  const [call, setcall] = useState(0);
+  console.log(CartItems);
   const { pathname } = location;
   let cartTotalPrice = 0;
-
+  const fetchingErrorHandler = (err) => {
+    addToast(err, {
+      appearance: "warning",
+      autoDismiss: true
+    })
+  }
+  const modifyCartItems = () => {
+    console.log(CartItems);
+    CartItems.forEach((element, index) => {
+      
+      const product = Products.find((obj) => {
+        console.log(obj, element);
+        return obj._id === element._id;
+      });
+      console.log(product);
+      if (product)
+      {
+        CartItems[index].stock = product.stock;
+        if (CartItems[index].quantity > CartItems[index].stock) {
+          CartItems[index].quantity = CartItems[index].stock;
+        }
+      }
+      else
+        delete CartItems[index];
+      console.log(CartItems);
+    })
+    replace(CartItems);
+    setcall(0);
+  }
+  useEffect(() => {
+    CartItems = cartItems;
+  }, [cartItems]);
+  useEffect(() => {
+    fetch(`${URL}getProducts`).then(
+      res => {
+        console.log(res);
+        if (res.status == 400) {
+          fetchingErrorHandler("Error while Fetching Products here");
+        }
+        return res.json();
+      }
+      ).then(
+        data => {
+          setProducts(data);
+          modifyCartItems();
+      }
+    ).catch(err => {
+      console.log(err)
+      // fetchingErrorHandler("Error while Fetching Products there");
+    });
+  }, []);
   return (
     <Fragment>
       <MetaTags>
@@ -54,7 +113,7 @@ const Cart = ({
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">
           <div className="container">
-            {cartItems && cartItems.length >= 1 ? (
+            {CartItems && CartItems.length >= 1 ? (
               <Fragment>
                 <h3 className="cart-page-title">Your cart items</h3>
                 <div className="row">
@@ -71,8 +130,9 @@ const Cart = ({
                           </tr>
                         </thead>
                         <tbody>
-                          {cartItems.map((cartItem, key) => {
-                            console.log(cartItem);
+                          {CartItems.map((cartItem, key) => {
+                            console.log(CartItems,key);
+                            console.log(cartItem,cartItem.quantity);
                             const discountedPrice = cartItem.discountedPrice;
                             // const discountedPrice = getDiscountPrice(
                             //   cartItem.price,
@@ -156,7 +216,7 @@ const Cart = ({
                                 </td>
 
                                 <td className="product-quantity">
-                                  <div className="cart-plus-minus">
+                                  {cartItem.stock===0?"Out of Stock":<div className="cart-plus-minus">
                                     <button
                                       className="dec qtybutton"
                                       onClick={() =>
@@ -184,14 +244,12 @@ const Cart = ({
                                         cartItem !== undefined &&
                                         cartItem.quantity &&
                                         cartItem.quantity >=
-                                          cartItemStock(
-                                            cartItem
-                                          )
+                                          cartItem.stock
                                       }
                                     >
                                       +
                                     </button>
-                                  </div>
+                                  </div>}
                                 </td>
                                 <td className="product-subtotal">
                                   {discountedPrice !== null
@@ -378,7 +436,8 @@ Cart.propTypes = {
 const mapStateToProps = state => {
   return {
     cartItems: state.cartData,
-    currency: state.currencyData
+    currency: state.currencyData,
+    products:state.productData
   };
 };
 
@@ -395,6 +454,9 @@ const mapDispatchToProps = dispatch => {
     },
     removeAllFromCart: addToast => {
       dispatch(removeAllFromCart(addToast));
+    },
+    replace: () => {
+      dispatch(replace());
     }
   };
 };
