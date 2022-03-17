@@ -8,6 +8,7 @@ import { connect, useDispatch, useSelector } from "react-redux";
 import { BreadcrumbsProvider } from "react-breadcrumbs-dynamic";
 import { fetchProducts } from "./redux/actions/productActions";
 import { useToasts } from "react-toast-notifications";
+import Loading from "./components/Loading";
 import Axios from "axios";
 // home pages
 const HomeFashion = lazy(() => import("./pages/home/HomeFashion"));
@@ -118,7 +119,7 @@ const App = props => {
   });
 
   const [user,SetUserLogin ] = useState(null);
-
+  const [loading, setLoading] = useState(false);
 
   const { addToast } = useToasts();
   const fetchingErrorHandler = (err) => {
@@ -129,16 +130,18 @@ const App = props => {
   }
   const dispatch = useDispatch();
   useEffect(() => {
-            fetch(`${URL}getProducts`).then(
-          res => {
-            console.log(res);
-                if (res.status == 400) {
-              fetchingErrorHandler("Error while Fetching Products");
+    setLoading(true);
+    fetch(`${URL}getProducts`).then(
+      res => {
+        console.log(res);
+        if (res.status == 400) {
+          fetchingErrorHandler("Error while Fetching Products");
             }
             return res.json();
           }
-        ).then(
-          data => {
+          ).then(
+            data => {
+            setLoading(false);
             console.log(data);
             const fn = fetchProducts(data);
             fn(dispatch);
@@ -152,25 +155,30 @@ const App = props => {
       SetUserLogin(JSON.parse(localStorage.getItem("user")));
     }
     else {
+      setLoading(true);
       fetch(`${URL}checkLogin`,{method:"POST",body:JSON.stringify({"cookie":cookie}), headers: {
         'Content-Type': 'application/json'
       },}, {
         credentials: 'include'
       }).then((res) => {
+        if (res.status == 400) {
+          fetchingErrorHandler("Server not responding");
+            }
         return res.json();
       }).then(data => {
+        setLoading(false);
         console.log(data);
         if (data.isLogin) {
           console.log(data.userdata);
           if(data.userdata){
-          SetUserLogin(data.userdata);
-          localStorage.setItem("user", data.userdata);}
-        }
-          })
-    }
-  }, [])
-  return (
-   
+            SetUserLogin(data.userdata);
+            localStorage.setItem("user", data.userdata);}
+          }
+        })
+      }
+    }, [])
+    return (
+      
       <BreadcrumbsProvider>
         <Router>
           <ScrollToTop>
@@ -183,7 +191,7 @@ const App = props => {
                   </div>
                 </div>
               }
-            >
+              >
               <Switch>
                 {/* <Route
                   exact
@@ -197,23 +205,23 @@ const App = props => {
                 <Route
                   path={process.env.PUBLIC_URL + "/home-fashion"}
                   component={HomeFashion}
-                />
+                  />
                 <Route
                   path={process.env.PUBLIC_URL + "/home-fashion-two"}
                   component={HomeFashionTwo}
-                />
+                  />
                 <Route
                   path={process.env.PUBLIC_URL + "/home-fashion-three"}
                   component={HomeFashionThree}
-                />
+                  />
                 <Route
                   path={process.env.PUBLIC_URL + "/home-fashion-four"}
                   component={HomeFashionFour}
-                />
+                  />
                 <Route
                   path={process.env.PUBLIC_URL + "/home-fashion-five"}
                   component={HomeFashionFive}
-                />
+                  />
                 <Route
                   path={process.env.PUBLIC_URL + "/home-fashion-six"}
                   component={HomeFashionSix}
@@ -225,7 +233,7 @@ const App = props => {
                 <Route
                   path={process.env.PUBLIC_URL + "/home-kids-fashion"}
                   component={HomeKidsFashion}
-                />
+                  />
                 <Route
                   path={process.env.PUBLIC_URL + "/home-cosmetics"}
                   component={HomeCosmetics}
@@ -241,7 +249,7 @@ const App = props => {
                 <Route
                   path={process.env.PUBLIC_URL + "/home-furniture-three"}
                   component={HomeFurnitureThree}
-                />
+                  />
                 <Route
                   path={process.env.PUBLIC_URL + "/home-electronics"}
                   component={HomeElectronics}
@@ -305,7 +313,8 @@ const App = props => {
                   path={process.env.PUBLIC_URL + "/"}
                   element= {user && user._id ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
                 /> */}
-              <Route exact path={process.env.PUBLIC_URL + "/"}>
+                <Route exact path={process.env.PUBLIC_URL + "/"}>
+                {!loading&& <Loading></Loading>}
                 {user ? <ShopGridStandard  isLogin={true} SetUserLogin={SetUserLogin}/>:<ShopGridStandard SetUserLogin={SetUserLogin} isLogin={false} />}
               </Route>
                 {/* <Route

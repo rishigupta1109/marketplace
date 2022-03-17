@@ -9,14 +9,20 @@ import axios from "axios";
 import Order from './../../components/orders/Order';
 import { connect, useDispatch, useSelector } from "react-redux";
 import { fetchOrders } from "../../redux/actions/ordersActions";
+import Loading from "../../components/Loading";
 const URL = "https://infinite-sands-08332.herokuapp.com/";
 // const URL = "http://localhost:9000/";
+
 const Orders = ({user, isLogin, SetUserLogin,ordersArray }) => {
   const [orders, setOrders] = useState(ordersArray);
+  const [loading, setLoading] = useState(false);
   let dispatch = useDispatch();
   useEffect(() => {
     if(user&&user._id)
-    {  axios.post(`${URL}getOrders`, {userID:user._id}).then(res => { setOrders(res.data); let fn = fetchOrders(res.data); fn(dispatch); });}
+    {
+      setLoading(true);
+      axios.post(`${URL}getOrders`, { userID: user._id }).then(res => { setOrders(res.data); setLoading(false); let fn = fetchOrders(res.data); fn(dispatch); });
+    }
   },[user])
     return (
         <Fragment>
@@ -31,9 +37,10 @@ const Orders = ({user, isLogin, SetUserLogin,ordersArray }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL +"Orders" }>
         Orders
-            </BreadcrumbsItem>
+        </BreadcrumbsItem>
             <LayoutOne SetUserLogin={SetUserLogin} headerTop="visible" isLogin={isLogin}>
           <Breadcrumb />
+        {loading&&<Loading></Loading>}
           <div className="cart-main-area pt-90 pb-100">
           <div className="container">
          { orders.length!==0?<>

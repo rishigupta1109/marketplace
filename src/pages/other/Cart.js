@@ -7,6 +7,7 @@ import MetaTags from "react-meta-tags";
 import { BreadcrumbsItem } from "react-breadcrumbs-dynamic";
 import { connect } from "react-redux";
 import { getDiscountPrice } from "../../helpers/product";
+import Loading from "../../components/Loading";
 import {
   addToCart,
   decrementQty,
@@ -39,6 +40,7 @@ const Cart = ({
   const [Products, setProducts] = useState(products.products);
   let CartItems = cartItems;
   const [call, setcall] = useState(0);
+  const [loading, setLoading] = useState(false);
   console.log(CartItems);
   const { pathname } = location;
   let cartTotalPrice = 0;
@@ -75,6 +77,7 @@ const Cart = ({
     CartItems = cartItems;
   }, [cartItems]);
   useEffect(() => {
+    setLoading(true);
     fetch(`${URL}getProducts`).then(
       res => {
         console.log(res);
@@ -85,6 +88,7 @@ const Cart = ({
       }
       ).then(
         data => {
+          setLoading(false);
           setProducts(data);
           modifyCartItems();
       }
@@ -113,6 +117,7 @@ const Cart = ({
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">
           <div className="container">
+            {loading&&<Loading></Loading>}
             {CartItems && CartItems.length >= 1 ? (
               <Fragment>
                 <h3 className="cart-page-title">Your cart items</h3>

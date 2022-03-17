@@ -8,15 +8,16 @@ import Nav from "react-bootstrap/Nav";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import axios from 'axios';
-
+import Loading from "../../components/Loading";
 
 
 const URL = "https://infinite-sands-08332.herokuapp.com/";
 // const URL = "http://localhost:9000/";
 
 
-const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
-
+const LoginRegister = ({ location, SetUserLogin, isLogin }) => {
+ 
+  const [loading, setLoading] = useState(false);
   const history = useHistory()
   const { pathname } = location;
   const [user, setUser] = useState({
@@ -42,11 +43,13 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
   const login = (e) => {
     e.preventDefault();
     console.log(user);
+    setLoading(true);
     axios.post(`${URL}login`, user, {
       withCredentials: true,
     })
     .then(res =>{
         alert("Loggedin")
+      setLoading(false);
       SetUserLogin(res.data.userdata)
       localStorage.setItem("user", JSON.stringify(res.data.userdata));
       setCookie("jwtoken", res.data.token);
@@ -62,9 +65,10 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
     const {name,email,number, password, reEnterPassword} = user
     if(email&&name && password && number && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
         // alert("posted")
+      setLoading(true);
         axios.post(`${URL}signup`, user)
           .then(res => {
-         
+            setLoading(false);
             alert(res.data)
             // history.push("/cart")
         })
@@ -92,6 +96,7 @@ const LoginRegister = ({ location, SetUserLogin,isLogin }) => {
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
         Login Register
       </BreadcrumbsItem>
+      {loading&&<Loading></Loading>}
       <LayoutOne headerTop="visible" SetUserLogin={SetUserLogin} isLogin={isLogin}>
         {/* breadcrumb */}
         <Breadcrumb />
