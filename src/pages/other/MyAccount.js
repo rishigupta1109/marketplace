@@ -7,12 +7,13 @@ import Accordion from "react-bootstrap/Accordion";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { useEffect } from "react";
+import { useToasts } from "react-toast-notifications";
 import axios from 'axios';
 const URL = "https://infinite-sands-08332.herokuapp.com/";
 // const URL = "http://localhost:9000/";
 const MyAccount = ({ location, isLogin, user,SetUserLogin }) => {
   
- 
+ const {addToast}=useToasts();
   const { pathname } = location;
   const [editState, setEditState] = useState(false);
   const [name, setName] = useState(()=>(user&&user.name)?user.name:"");
@@ -27,13 +28,16 @@ const MyAccount = ({ location, isLogin, user,SetUserLogin }) => {
     setPhone(() => (user && user.number) ? user.number : "");
   }, [user]);
   const saveDetails = () => {
-    let updateduser = { ...user, name, email, address, phone };
+    let updateduser = { ...user, name, email, address,number: phone };
     console.log(updateduser);
     axios.post(`${URL}updateDetails`, updateduser)
     .then( res => {
-      alert("ho gya kam");
+      addToast('Details Updated successfully',{
+        appearance:"success",
+        autoDismiss:true
+      })
       SetUserLogin((state) => {
-        return { ...state, name, email, address, phone };
+        return { ...state, name, email, address, number: phone };
       })
       console.log(res.data);
         // history.push("/cart")
@@ -94,7 +98,7 @@ const MyAccount = ({ location, isLogin, user,SetUserLogin }) => {
                               <div className="col-lg-12 col-md-12">
                                 <div className="billing-info">
                                   <label>Email Address</label>
-                                  <input value={email} disabled={!editState} onChange={(e) => { setEmail(e.target.value)}} type="email" />
+                                  <input value={email} disabled={true} onChange={(e) => { setEmail(e.target.value)}} type="email" />
                                 </div>
                               </div>
                               <div className="col-lg-12 col-md-12">
@@ -106,7 +110,7 @@ const MyAccount = ({ location, isLogin, user,SetUserLogin }) => {
                               <div className="col-lg-6 col-md-6">
                                 <div className="billing-info">
                                   <label>Telephone</label>
-                                  <input value={phone} disabled={!editState} onChange={(e) => { setPhone(e.target.value)}} type="number" />
+                                  <input value={phone} disabled={!editState} onChange={(e) => { setPhone(e.target.value)}} type="text" />
                                 </div>
                               </div>
                             </div>

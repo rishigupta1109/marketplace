@@ -54,26 +54,26 @@ const LoginRegister = ({ location, SetUserLogin, isLogin }) => {
         SetUserLogin(res.data.userdata)
         localStorage.setItem("user", JSON.stringify(res.data.userdata));
         setCookie("jwtoken", res.data.token);
-         addToast("Logged in successfully",{
-            appearance: "success",
-            autoDismiss: true
-          })
+        addToast("Logged in successfully",{
+          appearance: "success",
+          autoDismiss: true
+        })
         console.log(res.data);
         history.goBack();
       }
       else{
         addToast("connect to internet",{
-            appearance: "error",
-            autoDismiss: true
-          })
-      }
-    }).catch(err=>{
-       setLoading(false);
-       console.log(err);
-          addToast("wrong credentials or network error",{
-          appearance: "warning",
+          appearance: "error",
           autoDismiss: true
         })
+      }
+    }).catch(err=>{
+      setLoading(false);
+      console.log(err);
+      addToast("wrong credentials or network error",{
+        appearance: "warning",
+        autoDismiss: true
+      })
     })
   }
   const register = (e)=>{
@@ -83,14 +83,17 @@ const LoginRegister = ({ location, SetUserLogin, isLogin }) => {
     let emailPattern3 = new RegExp(/^[a-zA-Z0-9]+\.+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]/);
     const {name,email,number, password, reEnterPassword} = user
     if(email&&name && password && number.length===10 && (password===reEnterPassword)&&password.length>=6 && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
-        // alert("posted")
+      // alert("posted")
       setLoading(true);
-        axios.post(`${URL}signup`, user)
-          .then(res => {
-            console.log(res);   
-            setLoading(false);
-            if(res.data&&res.data.user){
-              addToast("Registered successfully",{
+      axios.post(`${URL}signup`, user)
+      .then(res => {
+        console.log(res);   
+        setLoading(false);
+        if(res.data&&res.data.user){
+          SetUserLogin(res.data.userdata)
+          localStorage.setItem("user", JSON.stringify(res.data.userdata));
+          setCookie("jwtoken", res.data.token);
+          addToast("Registered successfully",{
                 appearance: "success",
                 autoDismiss: true
               })
@@ -100,7 +103,7 @@ const LoginRegister = ({ location, SetUserLogin, isLogin }) => {
                 autoDismiss: true
               })
             }
-            history.push("/cart")
+            history.push("/")
           }).catch(err=>{
           setLoading(false);
           addToast("user already registered",{
