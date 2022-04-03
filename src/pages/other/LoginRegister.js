@@ -9,14 +9,14 @@ import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import axios from 'axios';
 import Loading from "../../components/Loading";
-
+import { useToasts } from 'react-toast-notifications';
 
 const URL = "https://infinite-sands-08332.herokuapp.com/";
 // const URL = "http://localhost:9000/";
 
 
 const LoginRegister = ({ location, SetUserLogin, isLogin }) => {
- 
+  const { addToast } = useToasts();
   const [loading, setLoading] = useState(false);
   const history = useHistory()
   const { pathname } = location;
@@ -48,13 +48,32 @@ const LoginRegister = ({ location, SetUserLogin, isLogin }) => {
       withCredentials: true,
     })
     .then(res =>{
-        alert("Loggedin")
+       
       setLoading(false);
-      SetUserLogin(res.data.userdata)
-      localStorage.setItem("user", JSON.stringify(res.data.userdata));
-      setCookie("jwtoken", res.data.token);
-      console.log(res.data);
-      history.goBack();
+      if(res&&res.data&&res.data.userdata){
+        SetUserLogin(res.data.userdata)
+        localStorage.setItem("user", JSON.stringify(res.data.userdata));
+        setCookie("jwtoken", res.data.token);
+         addToast("Logged in successfully",{
+            appearance: "success",
+            autoDismiss: true
+          })
+        console.log(res.data);
+        history.goBack();
+      }
+      else{
+        addToast("connect to internet",{
+            appearance: "error",
+            autoDismiss: true
+          })
+      }
+    }).catch(err=>{
+       setLoading(false);
+       console.log(err);
+          addToast("wrong credentials or network error",{
+          appearance: "warning",
+          autoDismiss: true
+        })
     })
   }
   const register = (e)=>{
@@ -63,24 +82,62 @@ const LoginRegister = ({ location, SetUserLogin, isLogin }) => {
     let emailPattern2 = new RegExp(/^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+\.[A-Za-z]+$/);
     let emailPattern3 = new RegExp(/^[a-zA-Z0-9]+\.+[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]/);
     const {name,email,number, password, reEnterPassword} = user
-    if(email&&name && password && number && (password===reEnterPassword) && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
+    if(email&&name && password && number.length===10 && (password===reEnterPassword)&&password.length>=6 && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
         // alert("posted")
       setLoading(true);
         axios.post(`${URL}signup`, user)
           .then(res => {
+            console.log(res);   
             setLoading(false);
-            alert(res.data)
-            // history.push("/cart")
+            if(res.data&&res.data.user){
+              addToast("Registered successfully",{
+                appearance: "success",
+                autoDismiss: true
+              })
+            }else{
+              addToast("connect to internet",{
+                appearance: "error",
+                autoDismiss: true
+              })
+            }
+            history.push("/cart")
+          }).catch(err=>{
+          setLoading(false);
+          addToast("user already registered",{
+         appearance: "warning",
+          autoDismiss: true
+        })
         })
       
     }else if(!email || !password || !number||!name){
-        alert("Please fill all the details")
+        addToast("Please fill all details",{
+           appearance: "warning",
+            autoDismiss: true
+        })
+    }
+    else if(number.length!==10){
+      addToast("write a valid mobile number",{
+            appearance: "warning",
+            autoDismiss: true
+        })
+    }
+    else if(password.length<6){
+      addToast("Password length must be greater than equal to 6",{
+            appearance: "warning",
+            autoDismiss: true
+        })
     }
     else if(password!=reEnterPassword){
-      alert("Password didn't match")
+      addToast("Password doesnt match",{
+            appearance: "warning",
+            autoDismiss: true
+        })
     }
     else{
-      alert("Invalid Input")
+      addToast("Please use right email",{
+           appearance: "warning",
+            autoDismiss: true
+        })
     }
   }
   return (

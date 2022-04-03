@@ -14,7 +14,7 @@ const URL = "https://infinite-sands-08332.herokuapp.com/";
 // const URL = "http://localhost:9000/";
 
 const Orders = ({user, isLogin, SetUserLogin,ordersArray }) => {
-  const [orders, setOrders] = useState(ordersArray);
+  const [orders, setOrders] = useState(ordersArray.reverse());
   const [loading, setLoading] = useState(false);
   let dispatch = useDispatch();
   useEffect(() => {

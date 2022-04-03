@@ -314,7 +314,7 @@ const App = props => {
                   element= {user && user._id ? <ShopGridStandard isLogin={true}/>:<ShopGridStandard isLogin={false}/>}
                 /> */}
                 <Route exact path={process.env.PUBLIC_URL + "/"}>
-                {!loading&& <Loading></Loading>}
+                {loading&& <Loading></Loading>}
                 {user ? <ShopGridStandard  isLogin={true} SetUserLogin={SetUserLogin}/>:<ShopGridStandard SetUserLogin={SetUserLogin} isLogin={false} />}
               </Route>
                 {/* <Route
