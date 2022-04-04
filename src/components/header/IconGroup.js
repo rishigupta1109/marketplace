@@ -6,9 +6,9 @@ import MenuCart from "./sub-components/MenuCart";
 import { removeFromCart } from "../../redux/actions/cartActions";
 import { render } from "react-dom";
 import axios from 'axios';
+import { useToasts } from "react-toast-notifications";
 const URL = "https://infinite-sands-08332.herokuapp.com/";
 // const URL = "http://localhost:9000/";
-
 const IconGroup = ({
   isLogin,
   SetUserLogin,
@@ -24,22 +24,25 @@ const IconGroup = ({
   };
 
   const history = useHistory()
-
+  const {addToast}=useToasts();
   const Logout = ()=>{
-    alert("Logging out")
     // axios.get(`${URL}logout`,{
-    //   withCredentials: true,
-    // })
-    // .then(res =>{
-    //     alert("Logout Successful")
-    //     SetUserLogin(null)
-    //     console.log(res.data);
-    //     history.push("/")
-    // })
-    alert("Logout Successful")
-    localStorage.removeItem("user");
+      //   withCredentials: true,
+      // })
+      // .then(res =>{
+        //     alert("Logout Successful")
+        //     SetUserLogin(null)
+        //     console.log(res.data);
+        //     history.push("/")
+        // })
+       
+        localStorage.removeItem("user");
         SetUserLogin(null)
         document.cookie = "jwtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        addToast('loggedout successfully',{
+          appearance:"success",
+          autoDismiss:true
+        })
         history.push("/")
   }
   const triggerMobileMenu = () => {

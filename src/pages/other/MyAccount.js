@@ -28,6 +28,13 @@ const MyAccount = ({ location, isLogin, user,SetUserLogin }) => {
     setPhone(() => (user && user.number) ? user.number : "");
   }, [user]);
   const saveDetails = () => {
+    if(phone.trim().length!==10){
+      addToast('write valid mobile number',{
+        appearance:"error",
+        autoDismiss:true
+      })
+      return;
+    }
     let updateduser = { ...user, name, email, address,number: phone };
     console.log(updateduser);
     axios.post(`${URL}updateDetails`, updateduser)

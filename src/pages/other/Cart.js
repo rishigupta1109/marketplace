@@ -38,7 +38,8 @@ const Cart = ({
   const [quantityCount] = useState(1);
   const { addToast } = useToasts();
   const [Products, setProducts] = useState(products.products);
-  let CartItems = cartItems;
+  // let CartItems = cartItems;
+  const [CartItems,setCartItems]=useState(cartItems);
   const [call, setcall] = useState(0);
   const [loading, setLoading] = useState(false);
   console.log(CartItems);
@@ -50,21 +51,29 @@ const Cart = ({
       autoDismiss: true
     })
   }
-  const modifyCartItems = () => {
+  const modifyCartItems = (data) => {
     console.log(CartItems);
     CartItems.forEach((element, index) => {
       
-      const product = Products.find((obj) => {
+      const product = data.find((obj) => {
         console.log(obj, element);
         return obj._id === element._id;
       });
       console.log(product);
       if (product)
       {
-        CartItems[index].stock = product.stock;
-        if (CartItems[index].quantity > CartItems[index].stock) {
-          CartItems[index].quantity = CartItems[index].stock;
-        }
+        setCartItems((state)=>{
+          let temp=[...state];
+          temp[index].stock = product.stock;
+          temp[index].discountedPrice=product.discountedPrice;
+          temp[index].productName=product.productName;
+          temp[index].category=product.category;
+          temp[index].price=product.price;
+          if (temp[index].quantity > temp[index].stock) {
+            temp[index].quantity = temp[index].stock;
+          }
+          return temp;
+        })
       }
       else
         delete CartItems[index];
@@ -74,7 +83,7 @@ const Cart = ({
     setcall(0);
   }
   useEffect(() => {
-    CartItems = cartItems;
+    setCartItems(cartItems)
   }, [cartItems]);
   useEffect(() => {
     setLoading(true);
@@ -90,7 +99,8 @@ const Cart = ({
         data => {
           setLoading(false);
           setProducts(data);
-          modifyCartItems();
+          console.log(data);
+          modifyCartItems(data);
       }
     ).catch(err => {
       console.log(err)
@@ -460,8 +470,8 @@ const mapDispatchToProps = dispatch => {
     removeAllFromCart: addToast => {
       dispatch(removeAllFromCart(addToast));
     },
-    replace: () => {
-      dispatch(replace());
+    replace: (data) => {
+      dispatch(replace(data));
     }
   };
 };

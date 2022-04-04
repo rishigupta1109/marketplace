@@ -71,9 +71,9 @@ export const removeAllFromCart = addToast => {
     dispatch({ type: DELETE_ALL_FROM_CART });
   };
 };
-export const replace = () => {
+export const replace = (data) => {
   return dispatch => {
-    dispatch({ type: "replace" });
+    dispatch({ type: REPLACE_ALL_FROM_CART,payload:data });
   };
 };
 
