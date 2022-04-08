@@ -10,8 +10,8 @@ import Order from './../../components/orders/Order';
 import { connect, useDispatch, useSelector } from "react-redux";
 import { fetchOrders } from "../../redux/actions/ordersActions";
 import Loading from "../../components/Loading";
-const URL = "https://infinite-sands-08332.herokuapp.com/";
-// const URL = "http://localhost:9000/";
+// const URL = "https://infinite-sands-08332.herokuapp.com/";
+const URL = "http://localhost:9000/";
 
 const Orders = ({user, isLogin, SetUserLogin,ordersArray }) => {
   const [orders, setOrders] = useState(ordersArray.reverse());
