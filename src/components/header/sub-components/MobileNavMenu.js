@@ -7,16 +7,16 @@ import { useToasts } from "react-toast-notifications";
 const MobileNavMenu = ({isLogin, SetUserLogin,strings}) => {
   const { addToast } = useToasts();
   const history = useHistory(); 
-  // const Logout = ()=>{
-  //       localStorage.removeItem("user");
-  //       SetUserLogin(null);
-  //       document.cookie = "jwtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-  //       addToast('logged out successfully',{
-  //         appearance:"success",
-  //         autoDismiss:true
-  //       })
-  //       history.push("/")
-  // }
+  const Logout = ()=>{
+        localStorage.removeItem("user");
+        SetUserLogin(null);
+        document.cookie = "jwtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        addToast('logged out successfully',{
+          appearance:"success",
+          autoDismiss:true
+        })
+        history.push("/")
+  }
   return (
     <nav className="offcanvas-navigation" id="offcanvas-navigation">
       <ul>
@@ -298,11 +298,11 @@ const MobileNavMenu = ({isLogin, SetUserLogin,strings}) => {
                 {strings["cart"]}
               </Link>
             </li>
-            <li>
+            {isLogin&&<li>
               <Link to={process.env.PUBLIC_URL + "/orders"}>
                 Orders
               </Link>
-            </li>
+            </li>}
             {/* <li>
               <Link to={process.env.PUBLIC_URL + "/checkout"}>
                 {strings["checkout"]}
@@ -340,7 +340,7 @@ const MobileNavMenu = ({isLogin, SetUserLogin,strings}) => {
             </li>
             {/* <li onClick={Logout}> */}
             <li>
-              {isLogin&&<Link to={process.env.PUBLIC_URL + "/"}>
+              {isLogin&&<Link onClick={Logout} to={process.env.PUBLIC_URL + "/"}>
                 Log Out
               </Link>}
             </li>

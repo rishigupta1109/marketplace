@@ -39,6 +39,7 @@ export default function ResetPage({ location, SetUserLogin, isLogin, setToken })
         setLoading(false);
         if(res.data.message){
           console.log(res.data.token);
+          localStorage.setItem("rtoken", res.data.token);
           setToken(res.data.resetToken);
           addToast("Check your Email",{
             appearance: "success",

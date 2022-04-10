@@ -566,6 +566,7 @@ const App = props => {
                       isLogin={false}
                       location={"/setNewPassword2$29283bsoidfnefhwsfkwe"}
                       setToken={setToken}
+                      token={token}
                     />
                   )}
                 </Route>

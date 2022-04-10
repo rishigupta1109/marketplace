@@ -4,7 +4,7 @@ import MobileNavMenu from "./sub-components/MobileNavMenu";
 import MobileLangCurChange from "./sub-components/MobileLangCurrChange";
 import MobileWidgets from "./sub-components/MobileWidgets";
 
-const MobileMenu = ({isLogin}) => {
+const MobileMenu = ({ isLogin, SetUserLogin }) => {
   useEffect(() => {
     const offCanvasNav = document.querySelector("#offcanvas-navigation");
     const offCanvasNavSubMenu = offCanvasNav.querySelectorAll(".sub-menu");
@@ -21,7 +21,7 @@ const MobileMenu = ({isLogin}) => {
     const numMenuExpand = menuExpand.length;
 
     for (let i = 0; i < numMenuExpand; i++) {
-      menuExpand[i].addEventListener("click", e => {
+      menuExpand[i].addEventListener("click", (e) => {
         sideMenuExpand(e);
       });
     }
@@ -33,7 +33,7 @@ const MobileMenu = ({isLogin}) => {
     }
   });
 
-  const sideMenuExpand = e => {
+  const sideMenuExpand = (e) => {
     e.currentTarget.parentElement.classList.toggle("active");
   };
 
@@ -59,7 +59,7 @@ const MobileMenu = ({isLogin}) => {
           {/* <MobileMenuSearch /> */}
 
           {/* mobile nav menu */}
-          <MobileNavMenu isLogin={isLogin} />
+          <MobileNavMenu SetUserLogin={SetUserLogin} isLogin={isLogin} />
 
           {/* mobile language and currency */}
           {/* <MobileLangCurChange /> */}
