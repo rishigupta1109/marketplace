@@ -1,9 +1,22 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { multilanguage } from "redux-multilanguage";
+import { useToasts } from "react-toast-notifications";
 
-const MobileNavMenu = ({isLogin, strings }) => {
+const MobileNavMenu = ({isLogin, SetUserLogin,strings}) => {
+  const { addToast } = useToasts();
+  const history = useHistory(); 
+  // const Logout = ()=>{
+  //       localStorage.removeItem("user");
+  //       SetUserLogin(null);
+  //       document.cookie = "jwtoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  //       addToast('logged out successfully',{
+  //         appearance:"success",
+  //         autoDismiss:true
+  //       })
+  //       history.push("/")
+  // }
   return (
     <nav className="offcanvas-navigation" id="offcanvas-navigation">
       <ul>
@@ -324,6 +337,12 @@ const MobileNavMenu = ({isLogin, strings }) => {
               <Link to={process.env.PUBLIC_URL + "/contact"}>
                 {strings["contact_us"]}
               </Link>
+            </li>
+            {/* <li onClick={Logout}> */}
+            <li>
+              {isLogin&&<Link to={process.env.PUBLIC_URL + "/"}>
+                Log Out
+              </Link>}
             </li>
             {/* <li>
               <Link to={process.env.PUBLIC_URL + "/not-found"}>

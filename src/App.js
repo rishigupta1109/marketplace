@@ -122,6 +122,7 @@ const App = props => {
 
   const [user,SetUserLogin ] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState("");
 
   const { addToast } = useToasts();
   const fetchingErrorHandler = (err) => {
@@ -169,9 +170,9 @@ const App = props => {
         return res.json();
       }).then(data => {
         setLoading(false);
-        console.log(data);
+        // console.log(data);
         if (data.isLogin) {
-          console.log(data.userdata);
+          // console.log(data.userdata);
           if(data.userdata){
             SetUserLogin(data.userdata);
             localStorage.setItem("user", data.userdata);}
@@ -552,18 +553,19 @@ const App = props => {
 
                 <Route exact path={process.env.PUBLIC_URL + "/forgotPassword"}>
                   {user ? (
-                    <ResetPage isLogin={true} location={"/forgotPassword"} />
+                    <ResetPage isLogin={true} location={"/forgotPassword"}/>
                   ) : (
-                    <ResetPage isLogin={false} location={"/forgotPassword"} />
+                    <ResetPage isLogin={false} location={"/forgotPassword"} setToken={setToken}/>
                   )}
                 </Route>
-                <Route exact path={process.env.PUBLIC_URL + "/setNewPassword"}>
+                <Route exact path={process.env.PUBLIC_URL + "/setNewPassword2$29283bsoidfnefhwsfkwe"}>
                   {user ? (
-                    <NewCredsPage isLogin={true} location={"/setNewPassword"} />
+                    <NewCredsPage isLogin={true} location={"/setNewPassword2$29283bsoidfnefhwsfkwe"}/>
                   ) : (
                     <NewCredsPage
                       isLogin={false}
-                      location={"/setNewPassword"}
+                      location={"/setNewPassword2$29283bsoidfnefhwsfkwe"}
+                      setToken={setToken}
                     />
                   )}
                 </Route>

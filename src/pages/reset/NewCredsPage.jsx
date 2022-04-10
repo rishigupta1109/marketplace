@@ -10,15 +10,90 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import axios from "axios";
 import Loading from "../../components/Loading";
 import { useToasts } from "react-toast-notifications";
-export default function NewCredsPage({ location, SetUserLogin, isLogin }) {
-  const { pathname } = location;
-  const [password, setpassword] = useState("");
-  const [cpassword, setcpassword] = useState("");
+
+export default function NewCredsPage({ location, SetUserLogin, isLogin, setToken}) {
+  const { addToast } = useToasts();
   const [loading, setLoading] = useState(false);
+  const history = useHistory()
+  const { pathname } = location;
+  const [user, setUser] = useState({
+    password: "",
+    reEnterPassword:"",
+    tok:setToken
+  })
+
+  const URL = "http://localhost:9000/";
+
+  const handleChange = e => {
+    const {name, value} = e.target
+    setUser({
+        ...user,
+        [name]:value
+    })
+  }
+
+  const saveCred = (e) =>{
+    e.preventDefault();
+    console.log(setToken);
+    const {password, reEnterPassword,userToken} = user;
+    if(password && (password===reEnterPassword) && userToken){
+      setLoading(true);
+      axios.post(`${URL}new-password`,user)
+      .then(res => {
+        if(res.data.message){
+          setToken()
+          addToast("Check your Email",{
+            appearance: "success",
+            autoDismiss: true
+          })
+          alert(res.data.message)
+          
+        }
+        else{
+          addToast("User does not exist",{
+            appearance: "error",
+            autoDismiss: true
+          })
+        }
+      }).catch(err=>{
+        setLoading(false);
+        console.log(err);
+        addToast("wrong credentials or network error",{
+          appearance: "warning",
+          autoDismiss: true
+        })
+      })
+    }
+    else if(!reEnterPassword || !password){
+        addToast("Please enter the Password",{
+            appearance: "warning",
+            autoDismiss: true
+        })
+    }
+    else if(password.length<6){
+      addToast("Password length must be greater than equal to 6",{
+            appearance: "warning",
+            autoDismiss: true
+        })
+    }
+    else if(password!=reEnterPassword){
+      addToast("Confirm Password doesnt match",{
+            appearance: "warning",
+            autoDismiss: true
+        })
+    }
+    else{
+      addToast("Time out try again later!",{
+        appearance: "warning",
+        autoDismiss: true
+      }
+    )}
+  }
+
   return (
     <Fragment>
       <MetaTags>
-        <title>Flone | Forgot Password</title>
+        <title>Flone | New Password</title>
         <meta
           name="description"
           content="Compare page of flone react minimalist eCommerce template."
@@ -26,7 +101,7 @@ export default function NewCredsPage({ location, SetUserLogin, isLogin }) {
       </MetaTags>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + "/"}>Home</BreadcrumbsItem>
       <BreadcrumbsItem to={process.env.PUBLIC_URL + pathname}>
-        Forgot Password
+        New Password
       </BreadcrumbsItem>
       {loading && <Loading></Loading>}
       <LayoutOne
@@ -44,7 +119,7 @@ export default function NewCredsPage({ location, SetUserLogin, isLogin }) {
                   <Nav variant="pills" className="login-register-tab-list">
                     <Nav.Item>
                       <Nav.Link eventKey="login">
-                        <h4>Set new Password</h4>
+                        <h4>Set New Password</h4>
                       </Nav.Link>
                     </Nav.Item>
                   </Nav>
@@ -52,30 +127,13 @@ export default function NewCredsPage({ location, SetUserLogin, isLogin }) {
                   <div className="login-form-container">
                     <div className="login-register-form">
                       <form>
-                        <input
-                          type="text"
-                          name="password"
-                          value={password}
-                          onChange={(e) => {
-                            setpassword(e.target.value);
-                          }}
-                          placeholder="password"
-                        ></input>
-                        <input
-                          type="text"
-                          name="cpassword"
-                          value={cpassword}
-                          onChange={(e) => {
-                            setcpassword(e.target.value);
-                          }}
-                          placeholder="confirm password"
-                        ></input>
-
+                        <input type="password" name="password" value={user.password} placeholder="Password" onChange={handleChange} required></input>
+                        <input type="password" name="reEnterPassword" value={user.reEnterPassword} placeholder="Re-Enter Password" onChange={handleChange} required></input>
                         <div className="button-box">
-                          <button type="submit">
+                          <button type="submit" onClick={saveCred}>
                             <span>Save</span>
                           </button>
-                        </div>
+                          </div>
                       </form>
                     </div>
                   </div>

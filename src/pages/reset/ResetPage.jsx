@@ -10,10 +10,59 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import axios from "axios";
 import Loading from "../../components/Loading";
 import { useToasts } from "react-toast-notifications";
-export default function ResetPage({ location, SetUserLogin, isLogin }) {
-    const { pathname } = location;
-    const [email, setemail] = useState("");
-    const [loading,setLoading]=useState(false);
+
+
+export default function ResetPage({ location, SetUserLogin, isLogin, setToken }) {
+  const { addToast } = useToasts();
+  const [loading, setLoading] = useState(false); 
+  const history = useHistory() 
+  const { pathname } = location;
+    const [user, setUser] = useState({
+      email:""
+    })
+    const URL = "http://localhost:9000/";
+
+    const handleChange = e => {
+      const {name, value} = e.target
+      setUser({
+          ...user,
+          [name]:value
+      })
+    }
+    const forgot = (e) => {
+      e.preventDefault();
+      console.log(user);
+      setLoading(true);
+      axios.post(`${URL}reset-password`, user, {
+        withCredentials: true,
+      }).then(res =>{
+        setLoading(false);
+        if(res.data.message){
+          console.log(res.data.token);
+          setToken(res.data.resetToken);
+          addToast("Check your Email",{
+            appearance: "success",
+            autoDismiss: true
+          })
+          // alert(res.data.message)
+          
+        }
+        else{
+          addToast("User does not exist",{
+            appearance: "error",
+            autoDismiss: true
+          })
+        }
+      }).catch(err=>{
+        setLoading(false);
+        console.log(err);
+        addToast("wrong credentials or network error",{
+          appearance: "warning",
+          autoDismiss: true
+        })
+      })
+    }
+
   return (
     <Fragment>
       <MetaTags>
@@ -51,18 +100,10 @@ export default function ResetPage({ location, SetUserLogin, isLogin }) {
                   <div className="login-form-container">
                     <div className="login-register-form">
                       <form>
-                        <input
-                          type="text"
-                          name="email"
-                          value={email}
-                          onChange={(e) => {
-                            setemail(e.target.value);
-                          }}
-                          placeholder="Email"
-                        ></input>
+                      <input type="text" name="email" value={user.email} placeholder="Email" onChange={handleChange} required></input>
 
                         <div className="button-box">
-                          <button type="submit">
+                          <button type="submit" onClick={forgot}>
                             <span>Reset Password</span>
                           </button>
                         </div>

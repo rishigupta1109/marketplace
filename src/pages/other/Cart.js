@@ -18,10 +18,10 @@ import {
 } from "../../redux/actions/cartActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
-// const imageURL = "http://localhost:9000/static/";
-const imageURL = "https://infinite-sands-08332.herokuapp.com/static/";
-const URL = "https://infinite-sands-08332.herokuapp.com/";
-// const URL = "http://localhost:9000/";
+const imageURL = "http://localhost:9000/static/";
+// const imageURL = "https://infinite-sands-08332.herokuapp.com/static/";
+// const URL = "https://infinite-sands-08332.herokuapp.com/";
+const URL = "http://localhost:9000/";
 const Cart = ({
   isLogin,
   SetUserLogin,
