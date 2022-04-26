@@ -9,17 +9,26 @@ const LayoutOne = ({
   children,
   headerContainerClass,
   headerTop,
-  headerPaddingClass
+  headerPaddingClass,
 }) => {
   return (
     <Fragment>
       <HeaderOne
-        isLogin = {isLogin}
-        SetUserLogin = {SetUserLogin}
+        isLogin={isLogin}
+        SetUserLogin={SetUserLogin}
         layout={headerContainerClass}
         top={headerTop}
         headerPaddingClass={headerPaddingClass}
       />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+        }}
+      >
+        <h1 style={{ alignSelf: "center",fontWeight:"bolder" }}>Market Place</h1>
+      </div>
       {children}
       <FooterOne
         backgroundColorClass="bg-gray"
@@ -34,7 +43,7 @@ LayoutOne.propTypes = {
   children: PropTypes.any,
   headerContainerClass: PropTypes.string,
   headerPaddingClass: PropTypes.string,
-  headerTop: PropTypes.string
+  headerTop: PropTypes.string,
 };
 
 export default LayoutOne;
