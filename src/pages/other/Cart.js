@@ -87,7 +87,7 @@ const Cart = ({
   }, [cartItems]);
   useEffect(() => {
     setLoading(true);
-    fetch(`${URL}getProducts`).then(
+    fetch(`${URL}stwo/getProducts`).then(
       res => {
         console.log(res);
         if (res.status == 400) {

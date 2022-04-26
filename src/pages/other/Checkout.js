@@ -12,8 +12,8 @@ import axios from 'axios';
 import { useHistory } from "react-router-dom";
 import { removeAllFromCart} from "../../redux/actions/cartActions";
 import { decrementProduct} from "../../redux/actions/productActions";
-// const URL = "https://infinite-sands-08332.herokuapp.com/";
-const URL = "http://localhost:9000/";
+const URL = "https://infinite-sands-08332.herokuapp.com/";
+// const URL = "http://localhost:9000/";
 const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin,removeAllFromCart ,decrementProduct}) => {
   const { pathname } = location;
  
@@ -66,7 +66,7 @@ const Checkout = ({user, location, cartItems, currency,isLogin,SetUserLogin,remo
         products: cartItems,
         status:"PLACED"
       }
-      axios.post(`${URL}placeOrder`, 
+      axios.post(`${URL}stwo/placeOrder`, 
         orderData).then(res => {
           console.log(res);
           addToast("Order Placed Successfully",{

@@ -134,7 +134,7 @@ const App = props => {
   const dispatch = useDispatch();
   useEffect(() => {
     setLoading(true);
-    fetch(`${URL}getProducts`).then(
+    fetch(`${URL}stwo/getProducts`).then(
       res => {
         console.log(res);
         if (res.status == 400) {
@@ -159,7 +159,7 @@ const App = props => {
     }
     else {
       setLoading(true);
-      fetch(`${URL}checkLogin`,{method:"POST",body:JSON.stringify({"cookie":cookie}), headers: {
+      fetch(`${URL}stwo/checkLogin`,{method:"POST",body:JSON.stringify({"cookie":cookie}), headers: {
         'Content-Type': 'application/json'
       },}, {
         credentials: 'include'

@@ -20,7 +20,9 @@ export default function ResetPage({ location, SetUserLogin, isLogin, setToken })
     const [user, setUser] = useState({
       email:""
     })
-    const URL = "http://localhost:9000/";
+    
+const URL = "https://infinite-sands-08332.herokuapp.com/";
+    // const URL = "http://localhost:9000/";
 
     const handleChange = e => {
       const {name, value} = e.target
@@ -33,7 +35,7 @@ export default function ResetPage({ location, SetUserLogin, isLogin, setToken })
       e.preventDefault();
       console.log(user);
       setLoading(true);
-      axios.post(`${URL}reset-password`, user, {
+      axios.post(`${URL}stwo/reset-password`, user, {
         withCredentials: true,
       }).then(res =>{
         setLoading(false);

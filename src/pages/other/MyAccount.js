@@ -9,8 +9,8 @@ import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 import { useEffect } from "react";
 import { useToasts } from "react-toast-notifications";
 import axios from 'axios';
-// const URL = "https://infinite-sands-08332.herokuapp.com/";
-const URL = "http://localhost:9000/";
+const URL = "https://infinite-sands-08332.herokuapp.com/";
+// const URL = "http://localhost:9000/";
 const MyAccount = ({ location, isLogin, user,SetUserLogin }) => {
   
  const {addToast}=useToasts();
@@ -37,7 +37,7 @@ const MyAccount = ({ location, isLogin, user,SetUserLogin }) => {
     }
     let updateduser = { ...user, name, email, address,number: phone };
     console.log(updateduser);
-    axios.post(`${URL}updateDetails`, updateduser)
+    axios.post(`${URL}stwo/updateDetails`, updateduser)
     .then( res => {
       addToast('Details Updated successfully',{
         appearance:"success",

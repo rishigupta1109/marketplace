@@ -11,8 +11,8 @@ import axios from 'axios';
 import Loading from "../../components/Loading";
 import { useToasts } from 'react-toast-notifications';
 
-// const URL = "https://infinite-sands-08332.herokuapp.com/";
-const URL = "http://localhost:9000/";
+const URL = "https://infinite-sands-08332.herokuapp.com/";
+// const URL = "http://localhost:9000/";
 
 
 const LoginRegister = ({ location, SetUserLogin, isLogin }) => {
@@ -44,7 +44,7 @@ const LoginRegister = ({ location, SetUserLogin, isLogin }) => {
     e.preventDefault();
     console.log(user);
     setLoading(true);
-    axios.post(`${URL}login`, user, {
+    axios.post(`${URL}stwo/login`, user, {
       withCredentials: true,
     })
     .then(res =>{
@@ -85,7 +85,7 @@ const LoginRegister = ({ location, SetUserLogin, isLogin }) => {
     if(email&&name && password && number.length===10 && (password===reEnterPassword)&&password.length>=6 && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
       // alert("posted")
       setLoading(true);
-      axios.post(`${URL}signup`, user)
+      axios.post(`${URL}stwo/signup`, user)
       .then(res => {
         console.log(res);   
         setLoading(false);

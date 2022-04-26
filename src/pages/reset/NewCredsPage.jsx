@@ -27,7 +27,8 @@ export default function NewCredsPage({
     token: localStorage.getItem("rtoken"),
   });
 
-  const URL = "http://localhost:9000/";
+const URL = "https://infinite-sands-08332.herokuapp.com/";
+  // const URL = "http://localhost:9000/";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +46,7 @@ export default function NewCredsPage({
     if (password && password === reEnterPassword && token) {
       setLoading(true);
       axios
-        .post(`${URL}new-password`, user)
+        .post(`${URL}stwo/new-password`, user)
         .then((res) => {
           console.log("res", res, res.data.message);
           if (res.data.message) {
