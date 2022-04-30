@@ -85,32 +85,35 @@ const LoginRegister = ({ location, SetUserLogin, isLogin }) => {
     if(email&&name && password && number.length===10 && (password===reEnterPassword)&&password.length>=6 && (emailPattern.test(email) || emailPattern2.test(email)|| emailPattern3.test(email))){
       // alert("posted")
       setLoading(true);
-      axios.post(`${URL}stwo/signup`, user)
-      .then(res => {
-        console.log(res);   
-        setLoading(false);
-        if(res.data&&res.data.user){
-          SetUserLogin(res.data.userdata)
-          localStorage.setItem("user", JSON.stringify(res.data.userdata));
-          setCookie("jwtoken", res.data.token);
-          addToast("Registered successfully",{
-                appearance: "success",
-                autoDismiss: true
-              })
-            }else{
-              addToast("connect to internet",{
-                appearance: "error",
-                autoDismiss: true
-              })
-            }
-            history.push("/")
-          }).catch(err=>{
+      axios
+        .post(`${URL}stwo/signup`, user)
+        .then((res) => {
+          console.log(res);
           setLoading(false);
-          addToast("user already registered",{
-         appearance: "warning",
-          autoDismiss: true
+          if (res.data && res.data.user) {
+            SetUserLogin(res.data.userdata);
+            localStorage.setItem("user", JSON.stringify(res.data.userdata));
+            setCookie("jwtoken", res.data.token);
+            addToast("Registered successfully", {
+              appearance: "success",
+              autoDismiss: true,
+            });
+          } else {
+            addToast("connect to internet", {
+              appearance: "error",
+              autoDismiss: true,
+            });
+          }
+          history.push("/");
         })
-        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+          addToast("user already registered", {
+            appearance: "warning",
+            autoDismiss: true,
+          });
+        });
       
     }else if(!email || !password || !number||!name){
         addToast("Please fill all details",{

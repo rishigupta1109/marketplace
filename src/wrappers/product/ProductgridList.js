@@ -21,6 +21,7 @@ const ProductGrid = ({
  
   return (
     <Fragment>
+    {products.length===0&&<p>no products available</p>}
       {products.map(product => {
         return (
           <ProductGridListSingle

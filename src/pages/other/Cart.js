@@ -1,6 +1,6 @@
-import "../../assets/css/OrderStatus.css"
+import "../../assets/css/OrderStatus.css";
 import PropTypes from "prop-types";
-import React, { Fragment, useState ,useEffect} from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useToasts } from "react-toast-notifications";
 import MetaTags from "react-meta-tags";
@@ -14,8 +14,9 @@ import {
   removeFromCart,
   cartItemStock,
   removeAllFromCart,
-  replace
+  replace,
 } from "../../redux/actions/cartActions";
+import { fetchProducts } from "../../redux/actions/productActions";
 import LayoutOne from "../../layouts/LayoutOne";
 import Breadcrumb from "../../wrappers/breadcrumb/Breadcrumb";
 // const imageURL = "http://localhost:9000/static/";
@@ -33,79 +34,99 @@ const Cart = ({
   addToCart,
   removeFromCart,
   replace,
-  removeAllFromCart
+  removeAllFromCart,
+  fetchProducts,
 }) => {
   const [quantityCount] = useState(1);
   const { addToast } = useToasts();
   const [Products, setProducts] = useState(products.products);
   // let CartItems = cartItems;
-  const [CartItems,setCartItems]=useState(cartItems);
+  const [CartItems, setCartItems] = useState(cartItems);
   const [call, setcall] = useState(0);
+  const checkOutofstock = () => {
+    let ans=false;
+    CartItems.forEach((data) => {
+      if (data.stock === 0) {
+        console.log("hell")
+        ans=true;
+      }
+    });
+    return ans;
+  };
+  const [isOutofStock, setisOutofStock] = useState(checkOutofstock());
+  console.log(isOutofStock);
   const [loading, setLoading] = useState(false);
   console.log(CartItems);
+  console.log(Products);
   const { pathname } = location;
   let cartTotalPrice = 0;
+
   const fetchingErrorHandler = (err) => {
     addToast(err, {
       appearance: "warning",
-      autoDismiss: true
-    })
-  }
+      autoDismiss: true,
+    });
+  };
   const modifyCartItems = (data) => {
     console.log(CartItems);
     CartItems.forEach((element, index) => {
-      
       const product = data.find((obj) => {
         console.log(obj, element);
         return obj._id === element._id;
       });
       console.log(product);
-      if (product)
-      {
-        setCartItems((state)=>{
-          let temp=[...state];
+      if (product) {
+        setCartItems((state) => {
+          let temp = [...state];
           temp[index].stock = product.stock;
-          temp[index].discountedPrice=product.discountedPrice;
-          temp[index].productName=product.productName;
-          temp[index].category=product.category;
-          temp[index].price=product.price;
+          temp[index].discountedPrice = product.discountedPrice;
+          temp[index].productName = product.productName;
+          temp[index].category = product.category;
+          temp[index].price = product.price;
           if (temp[index].quantity > temp[index].stock) {
             temp[index].quantity = temp[index].stock;
           }
           return temp;
-        })
-      }
-      else
-        delete CartItems[index];
-      console.log(CartItems);
-    })
+        });
+      } else
+        setCartItems((state) => {
+          let temp = [...state];
+          temp[index].stock = 0;
+          return temp;
+        });
+    });
+    
+    console.log(CartItems);
     replace(CartItems);
     setcall(0);
-  }
+  };
   useEffect(() => {
-    setCartItems(cartItems)
+    setCartItems(cartItems);
   }, [cartItems]);
   useEffect(() => {
+    setisOutofStock(checkOutofstock());
+  }, [CartItems]);
+  useEffect(() => {
     setLoading(true);
-    fetch(`${URL}stwo/getProducts`).then(
-      res => {
+    fetch(`${URL}stwo/getProducts`)
+      .then((res) => {
         console.log(res);
         if (res.status == 400) {
           fetchingErrorHandler("Error while Fetching Products here");
         }
         return res.json();
-      }
-      ).then(
-        data => {
-          setLoading(false);
-          setProducts(data);
-          console.log(data);
-          modifyCartItems(data);
-      }
-    ).catch(err => {
-      console.log(err)
-      // fetchingErrorHandler("Error while Fetching Products there");
-    });
+      })
+      .then((data) => {
+        setLoading(false);
+        setProducts(data);
+        console.log(data);
+        fetchProducts(data);
+        modifyCartItems(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        // fetchingErrorHandler("Error while Fetching Products there");
+      });
   }, []);
   return (
     <Fragment>
@@ -122,12 +143,16 @@ const Cart = ({
         Cart
       </BreadcrumbsItem>
 
-      <LayoutOne SetUserLogin={SetUserLogin}  headerTop="visible" isLogin={isLogin}>
+      <LayoutOne
+        SetUserLogin={SetUserLogin}
+        headerTop="visible"
+        isLogin={isLogin}
+      >
         {/* breadcrumb */}
         <Breadcrumb />
         <div className="cart-main-area pt-90 pb-100">
           <div className="container">
-            {loading&&<Loading></Loading>}
+            {loading && <Loading></Loading>}
             {CartItems && CartItems.length >= 1 ? (
               <Fragment>
                 <h3 className="cart-page-title">Your cart items</h3>
@@ -146,8 +171,8 @@ const Cart = ({
                         </thead>
                         <tbody>
                           {CartItems.map((cartItem, key) => {
-                            console.log(CartItems,key);
-                            console.log(cartItem,cartItem.quantity);
+                            console.log(CartItems, key);
+                            console.log(cartItem, cartItem.quantity);
                             const discountedPrice = cartItem.discountedPrice;
                             // const discountedPrice = getDiscountPrice(
                             //   cartItem.price,
@@ -159,7 +184,8 @@ const Cart = ({
                             const finalDiscountedPrice = (
                               discountedPrice * currency.currencyRate
                             ).toFixed(2);
-                            let discount =100- (discountedPrice / cartItem.price) * 100;
+                            let discount =
+                              100 - (discountedPrice / cartItem.price) * 100;
                             discount = Math.floor(discount);
                             discountedPrice != null
                               ? (cartTotalPrice +=
@@ -176,16 +202,13 @@ const Cart = ({
                                       cartItem.id
                                     }
                                   > */}
-                                    <img
-                                      className="img-fluid"
-                                      src={
-                                        imageURL +
-                                        cartItem.image
-                                      }
-                                      alt=""
-                                    />
+                                  <img
+                                    className="img-fluid"
+                                    src={imageURL + cartItem.image}
+                                    alt=""
+                                  />
                                   {/* </Link> */}
-                               
+
                                   {/* <Link
                                     to={
                                       process.env.PUBLIC_URL +
@@ -193,7 +216,7 @@ const Cart = ({
                                       cartItem.productID
                                     }
                                   > */}
-                                    {cartItem.productName}
+                                  {cartItem.productName}
                                   {/* </Link> */}
                                   {cartItem.selectedProductColor &&
                                   cartItem.selectedProductSize ? (
@@ -231,40 +254,43 @@ const Cart = ({
                                 </td>
 
                                 <td className="product-quantity">
-                                  {cartItem.stock===0?"Out of Stock":<div className="cart-plus-minus">
-                                    <button
-                                      className="dec qtybutton"
-                                      onClick={() =>
-                                        decrementQty(cartItem, addToast)
-                                      }
-                                    >
-                                      -
-                                    </button>
-                                    <input
-                                      className="cart-plus-minus-box"
-                                      type="text"
-                                      value={cartItem.quantity}
-                                      readOnly
-                                    />
-                                    <button
-                                      className="inc qtybutton"
-                                      onClick={() =>
-                                        addToCart(
-                                          cartItem,
-                                          addToast,
-                                          quantityCount
-                                        )
-                                      }
-                                      disabled={
-                                        cartItem !== undefined &&
-                                        cartItem.quantity &&
-                                        cartItem.quantity >=
-                                          cartItem.stock
-                                      }
-                                    >
-                                      +
-                                    </button>
-                                  </div>}
+                                  {cartItem.stock === 0 ? (
+                                    "Out of Stock"
+                                  ) : (
+                                    <div className="cart-plus-minus">
+                                      <button
+                                        className="dec qtybutton"
+                                        onClick={() =>
+                                          decrementQty(cartItem, addToast)
+                                        }
+                                      >
+                                        -
+                                      </button>
+                                      <input
+                                        className="cart-plus-minus-box"
+                                        type="text"
+                                        value={cartItem.quantity}
+                                        readOnly
+                                      />
+                                      <button
+                                        className="inc qtybutton"
+                                        onClick={() =>
+                                          addToCart(
+                                            cartItem,
+                                            addToast,
+                                            quantityCount
+                                          )
+                                        }
+                                        disabled={
+                                          cartItem !== undefined &&
+                                          cartItem.quantity &&
+                                          cartItem.quantity >= cartItem.stock
+                                        }
+                                      >
+                                        +
+                                      </button>
+                                    </div>
+                                  )}
                                 </td>
                                 <td className="product-subtotal">
                                   {discountedPrice !== null
@@ -299,9 +325,7 @@ const Cart = ({
                   <div className="col-lg-12">
                     <div className="cart-shiping-update-wrapper">
                       <div className="cart-shiping-update">
-                        <Link
-                          to={process.env.PUBLIC_URL + "/"}
-                        >
+                        <Link to={process.env.PUBLIC_URL + "/"}>
                           Continue Shopping
                         </Link>
                       </div>
@@ -398,18 +422,37 @@ const Cart = ({
                           {currency.currencySymbol + cartTotalPrice.toFixed(2)}
                         </span>
                       </h4>
-                      
-                   {isLogin?<Link to={process.env.PUBLIC_URL + "/checkout"}>
-                        Proceed to Checkout
-                      </Link>:<Link onClick={()=>{
-                          addToast("Login to checkout", {
-                            appearance: "warning",
-                            autoDismiss: true
-                          });
-                      }} to={process.env.PUBLIC_URL + "/login-register"}>
-                        Proceed to Checkout
-                      </Link>}
 
+                      {!isOutofStock&&(isLogin   ? (
+                        <Link to={process.env.PUBLIC_URL + "/checkout"}>
+                          Proceed to Checkout
+                        </Link>
+                      ) : (
+                        <Link
+                          onClick={() => {
+                            addToast("Login to checkout", {
+                              appearance: "warning",
+                              autoDismiss: true,
+                            });
+                          }}
+                          to={process.env.PUBLIC_URL + "/login-register"}
+                        >
+                          Proceed to Checkout
+                        </Link>
+                      ))}
+                      {isOutofStock && (
+                        <Link
+                          onClick={() => {
+                            addToast("a product is out of stock", {
+                              appearance: "warning",
+                              autoDismiss: true,
+                            });
+                          }}
+                          to="#"
+                        >
+                          Proceed to Checkout
+                        </Link>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -423,9 +466,7 @@ const Cart = ({
                     </div>
                     <div className="item-empty-area__text">
                       No items found in cart <br />{" "}
-                      <Link to={process.env.PUBLIC_URL + "/"}>
-                        Shop Now
-                      </Link>
+                      <Link to={process.env.PUBLIC_URL + "/"}>Shop Now</Link>
                     </div>
                   </div>
                 </div>
@@ -445,18 +486,19 @@ Cart.propTypes = {
   decrementQty: PropTypes.func,
   location: PropTypes.object,
   removeAllFromCart: PropTypes.func,
-  removeFromCart: PropTypes.func
+  removeFromCart: PropTypes.func,
+  fetchProducts: PropTypes.func,
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     cartItems: state.cartData,
     currency: state.currencyData,
-    products:state.productData
+    products: state.productData,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     addToCart: (item, addToast, quantityCount) => {
       dispatch(addToCart(item, addToast, quantityCount));
@@ -467,12 +509,15 @@ const mapDispatchToProps = dispatch => {
     removeFromCart: (item, addToast) => {
       dispatch(removeFromCart(item, addToast));
     },
-    removeAllFromCart: addToast => {
+    removeAllFromCart: (addToast) => {
       dispatch(removeAllFromCart(addToast));
     },
     replace: (data) => {
       dispatch(replace(data));
-    }
+    },
+    fetchProducts: (data) => {
+      dispatch(fetchProducts);
+    },
   };
 };
 

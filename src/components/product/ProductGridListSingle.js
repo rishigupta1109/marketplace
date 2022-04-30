@@ -20,7 +20,7 @@ const ProductGridListSingle = ({
   sliderClassName,
   spaceBottomClass
 }) => {
-  console.log(currency)
+  
   const [modalShow, setModalShow] = useState(false);
   const { addToast } = useToasts();
 
